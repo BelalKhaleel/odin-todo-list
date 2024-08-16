@@ -13,3 +13,69 @@
   grid-template-columns: 1fr 4fr;
 }
 
+.sidebar {
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  padding: 2em;
+  color: white;
+}
+
+.sidebar-header {
+  font-size: 2rem;
+}
+
+.sidebar-header, .sidebar-nav-tasks {
+  margin-bottom: 2em;
+}
+
+.sidebar-nav-tasks > h2 {
+  margin-bottom: .3em;
+}
+
+.sidebar-nav-tasks, .sidebar-nav-projects {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.3rem;
+}
+
+.sidebar-nav-item, .sidebar-nav-project {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: .4em;
+  border-radius: 5px;
+}
+
+.sidebar-nav-item:hover, .sidebar-nav-project:hover {
+  background-color: #4e4848;
+}
+
+.projects {
+  margin-bottom: .5em;
+}
+
+.nav-item-icon, .trash-nav-icon, .new-project-btn {
+  width: .8em;
+}
+
+.trash-nav-icon {
+  margin-left: 10px;
+}
+
+.new-project-container {
+  width: fit-content;
+  display: flex;
+  gap: 10px;
+  margin-bottom: .5em;
+}
+
+.new-project-input {
+  width: 12em;
+  height: 2em;
+}
+
+.new-project-btn {
+  cursor: pointer;
+}

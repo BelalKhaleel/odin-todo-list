@@ -1,8 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  </head>
-  <body></body>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <h1 class="sidebar-header">Task Manager</h1>
+            <div class="sidebar-nav-tasks">
+                <h2>Tasks</h2>
+                <div class="sidebar-nav-item" id="add-task">
+                    <img class="nav-item-icon" src="./components/sidebar/plus-solid.svg" alt="Add task icon">
+                    <span class="nav-item-title">Add task</span>
+                </div>
+                <div class="sidebar-nav-item" id="today">
+                    <img class="nav-item-icon" src="./components/sidebar/calendar-day-solid.svg" alt="Today icon">
+                    <span class="nav-item-title">Today</span>
+                </div>
+                <div class="sidebar-nav-item" id="upcoming">
+                    <img class="nav-item-icon" src="./components/sidebar/calendar-days-solid.svg" alt="Upcoming icon">
+                    <span class="nav-item-title">Upcoming</span>
+                </div>
+                <div class="sidebar-nav-item" id="important">
+                    <img class="nav-item-icon" src="./components/sidebar/circle-exclamation-solid.svg" alt="Important icon">
+                    <span class="nav-item-title">Important</span>
+                </div>
+                <div class="sidebar-nav-item" id="completed">
+                    <img class="nav-item-icon" src="./components/sidebar/calendar-check-regular.svg" alt="Completed icon">
+                    <span class="nav-item-title">Completed</span>
+                </div>
+            </div>
+            <div class="sidebar-nav-projects">
+                <h2 class="projects">Projects</h2>
+                <div class="new-project-container">
+                    <input class="new-project-input" type="text" placeholder="Add New Project" required>
+                    <img class="new-project-btn" src="./components/sidebar/plus-solid.svg" alt="Add project icon">
+                </div>
+                <div class="sidebar-nav-project" id="my-project">
+                    <img class="nav-item-icon" src="./components/sidebar/folder-open-solid.svg" alt="My project icon">
+                    <span class="nav-item-title">My Project</span>
+                    <!-- <img class="trash-nav-icon" src="./components/sidebar/trash-solid.svg" alt="Delete project icon"> -->
+                </div>
+            </div>
+        </aside>
+        <main>
+            <div class="tasks"></div>
+        </main>
+    </div>
+</body>
 </html>
