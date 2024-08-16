@@ -21,7 +21,7 @@
   font-size: 1.3rem;
 }
 
-.sidebar-nav-item {
+.sidebar-nav-item, .sidebar-nav-project {
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -29,6 +29,24 @@
   gap: 10px;
 }
 
-.nav-item-icon {
-  width: 1em;
+.nav-item-icon, .trash-nav-icon, .new-project-btn {
+  width: .8em;
+}
+
+.trash-nav-icon {
+  margin-left: 10px;
+}
+
+.new-project-container {
+  display: flex;
+  gap: 10px;
+}
+
+.new-project-input {
+  width: 12em;
+  height: 2em;
+}
+
+.new-project-btn {
+  cursor: pointer;
 }

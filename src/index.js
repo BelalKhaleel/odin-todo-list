@@ -1,6 +1,8 @@
 import todo from './components/todo/todoModel.js';
 import project from './components/project/projectModel.js';
-import sidebar from './components/sidebar/sidebar.js';
+import sidebar, { createSidebarElement, sidebarNavProjects } from './components/sidebar/sidebar.js';
+import trash from './components/sidebar/trash-solid.svg';
+import openFolder from './components/sidebar/folder-open-solid.svg';
 import './style.css';
 
 const list = todo('create project', 'todo list project', '8/4/2024', 'high');
@@ -29,3 +31,25 @@ container.appendChild(main);
 const tasks = document.createElement('div');
 tasks.classList.add('tasks');
 main.appendChild(tasks);
+
+
+document.addEventListener('click', (e) => {
+  if (e.target.matches('.new-project-btn')) {
+    const newProjectInput = document.querySelector('.new-project-input');
+    if (newProjectInput.value.includes(' ')) {
+      const newProject = createSidebarElement(newProjectInput.value, 'sidebar-nav-project', newProjectInput.value.split(' ').join('-').toLowerCase(), openFolder);
+      const trashIcon = document.createElement('img');
+      trashIcon.classList.add('trash-nav-icon');
+      trashIcon.src = trash;
+      newProject.appendChild(trashIcon);
+      sidebarNavProjects.append(newProject);
+    } else {
+      const newProject = createSidebarElement(newProjectInput.value, 'sidebar-nav-project', newProjectInput.value.toLowerCase(), openFolder);
+      const trashIcon = document.createElement('img');
+      trashIcon.classList.add('trash-nav-icon');
+      trashIcon.src = trash;
+      newProject.appendChild(trashIcon);
+      sidebarNavProjects.append(newProject);
+    }
+  }
+});
