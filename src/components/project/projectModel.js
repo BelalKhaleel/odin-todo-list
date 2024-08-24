@@ -1,8 +1,13 @@
-export default () => {
-  const todosList = [];
-  const addListToProject = (...todos) => todosList.push(...todos);
+// let projectId = 0;
+export default (title) => {
+  const tasksList = [];
+  const addListToProject = (...tasks) => tasksList.push(...tasks);
+  // projectId++;
+
   return {
-    todosList,
-    addListToProject,
+    // projectId,
+    title,
+    tasksList,
+    // addListToProject,
   }
 }
