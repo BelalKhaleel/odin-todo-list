@@ -51,7 +51,7 @@
             <span class="nav-item-title">Completed</span>
           </div>
         </div>
-        <div class="sidebar-nav-projects">
+        <div class="sidebar-nav-projects-section">
           <h2 class="projects">Projects</h2>
           <div class="new-project-container">
             <input
@@ -66,18 +66,20 @@
               alt="Add project icon"
             />
           </div>
-          <div class="sidebar-nav-project" id="my-project">
-            <img
-              class="nav-item-icon"
-              src="./components/icons/folder-open-solid.svg"
-              alt="My project icon"
-            />
-            <span class="nav-item-title">My Project</span>
+          <div class="sidebar-nav-projects">
+            <div class="sidebar-nav-project" id="all-tasks">
+              <img
+                class="nav-item-icon"
+                src="./components/icons/folder-open-solid.svg"
+                alt="open folder"
+              />
+              <span class="nav-item-title">All Tasks</span>
+            </div>
           </div>
         </div>
       </aside>
       <main>
-        <h2 class="current-project">My Project</h2>
+        <h2 class="current-project">All Tasks</h2>
         <div class="task-cards"></div>
         <dialog>
           <form method="dialog">
@@ -89,15 +91,14 @@
             <input type="date" id="task-due-date-input">
             <label for="task-priority-input">Priority:</label>
             <select id="task-priority-input">
-              <option value="">Choose task priority</option>
+              <option value="" disabled>Choose task priority</option>
               <option value="low">Low</option>
-              <option value="medium">Medium</option>
+              <option value="medium" selected>Medium</option>
               <option value="high">High</option>
             </select>
             <label for="task-project">Select project:</label>
             <select name="" id="task-project">
-              <option value="">Select to which project the task belongs</option>
-              <option value="my-project">My Project</option>
+              <option value="" disabled>Select to which project the task belongs</option>
             </select>
             <div class="form-btns">
               <button type="button" class="form-btn" id="add-task-btn">Add Task</button>

@@ -37,7 +37,7 @@
   margin-bottom: .3em;
 }
 
-.sidebar-nav-tasks, .sidebar-nav-projects {
+.sidebar-nav-tasks, .sidebar-nav-projects-section {
   display: flex;
   flex-direction: column;
   font-size: 1.3rem;
@@ -65,7 +65,7 @@
 }
 
 .trash-nav-icon {
-  margin-left: 10px;
+  margin-left: 1em;
 }
 
 .new-project-container {
@@ -234,7 +234,7 @@ label {
   margin-bottom: .2em;
 }
 
-input, textarea, select {
+input:not(.new-project-input), textarea, select {
   margin-bottom: 1em;
   padding: .5em;
 }

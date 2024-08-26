@@ -1,30 +1,26 @@
-import { addProject } from './components/project/projectController.js';
+import { addProject, createProjectOption, newProjectInput, projectsList } from './components/project/projectController.js';
 import { displayTask } from './components/task/taskController.js';
 import './style.css';
 
-// const project1 = project();
-// project1.addListToProject(list, list2);
-// console.log(project1)
-const dialog = document.querySelector('dialog');
-const taskTitle = document.querySelector('#task-title');
+const modal = document.querySelector('dialog');
 
 document.addEventListener('click', (e) => {
   if (e.target.matches('.new-project-btn')) {
     addProject();
+    newProjectInput.value = '';
   }
-  if (e.target.closest('#my-project')) {
-    // addTodoToAllTasks(list2);
-    // console.log(allTasks);
+  if (e.target.closest('#all-tasks')) {
+ 
   }
   if (e.target.closest('#add-task')) {
-    dialog.showModal();
+    modal.showModal();
+    console.log(projectsList)
+    projectsList.forEach(project => createProjectOption(project));
   }
   if (e.target.closest('#add-task-btn')) {
-    console.log(taskTitle.value)
+    
   }
   if (e.target.closest('#cancel-task-btn')) {
-    dialog.close();
+    modal.close();
   }
 });
-
-// displayTask()

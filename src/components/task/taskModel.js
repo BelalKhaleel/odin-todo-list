@@ -1,4 +1,4 @@
-export default (title, description, dueDate, priority, projectId) => {
+export default (title, description, dueDate, priority, project) => {
   let isComplete = false;
   const setCompleteStatus = () => isComplete = !isComplete;
 
@@ -7,7 +7,7 @@ export default (title, description, dueDate, priority, projectId) => {
     description,
     dueDate,
     priority,
-    projectId,
+    project,
     get isComplete() {
       return isComplete;
     },

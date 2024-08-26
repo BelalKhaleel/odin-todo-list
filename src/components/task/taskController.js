@@ -1,30 +1,23 @@
 import Task from "./taskModel";
 import edit from '../icons/pen-to-square-solid.svg';
 import trash from '../icons/trash-can-regular.svg';
+import { allTasks } from "../project/projectController";
 
-export const myProject = [];
-const title = document.getElementById('task-title');
-const description = document.getElementById('task-description');
-const dueDate = document.getElementById('task-due-date');
-console.log(dueDate);
-// const list = addTask('create project', 'todo list project', '8/4/2024', 'high', 1);
-// list.setCompleteStatus();
-// console.log(list);
-// console.log(list.isComplete);
-// addTodoToAllTasks(list)
-// const list2 = todo('design project', 'style todo list project', '9/4/2024', 'medium');
-// list2.addNote('try to finish it by tomorrow');
-// console.log(list2);
+const title = document.getElementById('task-title-input');
+const description = document.getElementById('task-description-input');
+const dueDate = document.getElementById('task-due-date-input');
+const priority = document.getElementById('task-priority-input');
+const project = document.getElementById('task-project');
 
 function addTask() {
-  const newTask = Task(title.value, description.value, dueDate.value, priority, projectId);
-  myProject.push(newTask);
-  return newTask;
+  const task = Task(title.value, description.value, dueDate.value, priority.value, project.value);
+  allTasks.push(task);
+  displayTask(task);
 }
 
 const taskCards = document.querySelector('.task-cards');
 
-export function displayTask() {
+function displayTask() {
 const taskCard = document.createElement('div');
 taskCard.className = 'task-card';
 
@@ -95,3 +88,5 @@ taskCards.appendChild(taskCard);
 }
 
 displayTask()
+
+export { displayTask };
