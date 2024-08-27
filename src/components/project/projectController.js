@@ -5,11 +5,10 @@ import trash from '../icons/trash-solid.svg';
 const sidebarNavProjects = document.querySelector('.sidebar-nav-projects');
 const allTasks = Project('All Tasks');
 const projectsList = [allTasks];
-// console.log(Project('Todo List'));
+
 function displayProject(title) {
   const project = document.createElement('div');
   project.classList.add('sidebar-nav-project');
-  // project.setAttribute('id', id);
   const projectTitle = document.createElement('span');
   projectTitle.classList.add('nav-item-title');
   projectTitle.textContent = title;
@@ -42,6 +41,7 @@ function createProjectOption(project) {
   const optionValue = project.title.toLowerCase().replace(/\s+/g, '-');
   option.setAttribute('value', optionValue);
   option.textContent = project.title;
+  // option.dataset.projectIndex = projectsList.indexOf(project);
   projectOptions.appendChild(option);
   return option;
 }

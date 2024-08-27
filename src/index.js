@@ -1,8 +1,9 @@
 import { addProject, createProjectOption, deleteProject, newProjectInput, projectsList } from './components/project/projectController.js';
-import { displayTask } from './components/task/taskController.js';
+import { addTask } from './components/task/taskController.js';
 import './style.css';
 
 const modal = document.querySelector('dialog');
+const form = document.getElementById('task-form');
 
 document.addEventListener('click', (e) => {
   if (e.target.matches('.new-project-btn')) {
@@ -18,7 +19,10 @@ document.addEventListener('click', (e) => {
     projectsList.forEach(project => createProjectOption(project));
   }
   if (e.target.closest('#add-task-btn')) {
-    
+    addTask();
+    console.log(projectsList);
+    modal.close();
+    form.reset();
   }
   if (e.target.closest('#cancel-task-btn')) {
     modal.close();

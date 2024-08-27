@@ -99,7 +99,7 @@ main {
 .task-cards {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 1.5em;
 }
 
 .task-card {
