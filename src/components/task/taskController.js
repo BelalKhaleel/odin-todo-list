@@ -1,6 +1,4 @@
 import Task from "./taskModel";
-import edit from '../icons/pen-to-square-solid.svg';
-import trash from '../icons/trash-can-regular.svg';
 import { allTasks, projectsList } from "../project/projectController";
 
 const title = document.getElementById('task-title-input');
@@ -14,7 +12,7 @@ function addTask() {
   const task = Task(title.value.trim(), description.value.trim(), dueDate.value, priority.value, project.options[project.selectedIndex].textContent);
   allTasks.tasksList.push(task);
   const index = projectsList.findIndex(p => p.title === project.options[project.selectedIndex].textContent);
-  if (index > -1) projectsList[index].tasksList.push(task);
+  if (index) projectsList[index].tasksList.push(task);
   displayTask(task);
 }
 
@@ -100,7 +98,10 @@ projectName.className = 'project-name';
 projectName.textContent = task.project;
 rightSection.append(cardActions, projectName);
 
+taskCard.dataset.taskIndex = allTasks.tasksList.indexOf(task);
+
 taskCards.appendChild(taskCard);
+console.log(task)
 }
 
 export { addTask };

@@ -133,12 +133,16 @@ main {
 }
 
 .low-priority::before {
-  background-color: green;
+  background-color: #04ff04;
 }
 
 .task-card-icon {
   width: 1.5em;
   cursor: pointer;
+}
+
+.task-description, .due-date {
+  margin-left: 2.4em;
 }
 
 .project-name {
@@ -220,7 +224,7 @@ main {
 
 .card-actions {
   display: flex;
-  gap: 15px;
+  gap: 1em;
 }
 
 .edit-btn:hover svg path, .delete-btn:hover {

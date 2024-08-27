@@ -26,9 +26,9 @@ function displayProject(title) {
 const newProjectInput = document.querySelector('.new-project-input');
 
 function addProject() {
-  if (!newProjectInput.value) return;
   const newProject = Project(newProjectInput.value.trim());
   console.log(newProject);
+  if (projectsList.some(project => project.title === newProject.title)) return;
   projectsList.push(newProject);
   console.log(projectsList)
   displayProject(newProject.title);
@@ -54,4 +54,4 @@ function deleteProject(e) {
   project.remove();
 }
 
-export { addProject, allTasks, projectsList, newProjectInput, createProjectOption, deleteProject };
+export { addProject, allTasks, projectsList, projectOptions, newProjectInput, createProjectOption, deleteProject };
