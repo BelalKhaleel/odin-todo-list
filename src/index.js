@@ -1,4 +1,4 @@
-import { addProject, createProjectOption, newProjectInput, projectsList } from './components/project/projectController.js';
+import { addProject, createProjectOption, deleteProject, newProjectInput, projectsList } from './components/project/projectController.js';
 import { displayTask } from './components/task/taskController.js';
 import './style.css';
 
@@ -22,5 +22,8 @@ document.addEventListener('click', (e) => {
   }
   if (e.target.closest('#cancel-task-btn')) {
     modal.close();
+  }
+  if (e.target.closest('.trash-nav-icon')) {
+    deleteProject(e);
   }
 });

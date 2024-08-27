@@ -33,23 +33,25 @@ function addProject() {
   projectsList.push(newProject);
   console.log(projectsList)
   displayProject(newProject.title);
-  // if (newProjectInput.value.includes(' ')) {
-  //   displayProject(trim(newProjectInput.value), trim(newProjectInput.value).split(' ').join('-').toLowerCase());
-  // } else {
-  //   displayProject(trim(newProjectInput.value), trim(newProjectInput.value).toLowerCase());
-  // }
 }
 
 const projectOptions = document.querySelector('#task-project');
 
 function createProjectOption(project) {
   const option = document.createElement('option');
-  let optionValue = '';
-  optionValue = project.title.includes(' ') ? project.title.split(' ').join('-').toLowerCase() : project.title.toLowerCase();
+  const optionValue = project.title.toLowerCase().replace(/\s+/g, '-');
   option.setAttribute('value', optionValue);
   option.textContent = project.title;
   projectOptions.appendChild(option);
   return option;
 }
 
-export { addProject, allTasks, projectsList, newProjectInput, createProjectOption };
+function deleteProject(e) {
+  const project = e.target.closest('.sidebar-nav-project');
+  const projectTitle = project.querySelector('.nav-item-title').textContent;
+  const index = projectsList.findIndex(project => project.title === projectTitle);
+  projectsList.splice(index, 1);
+  project.remove();
+}
+
+export { addProject, allTasks, projectsList, newProjectInput, createProjectOption, deleteProject };
