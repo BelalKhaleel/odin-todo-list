@@ -10,46 +10,46 @@
         <h1 class="sidebar-header">Task Manager</h1>
         <div class="sidebar-nav-tasks">
           <h2>Tasks</h2>
-          <div class="sidebar-nav-item" id="add-task">
+          <button class="sidebar-nav-item" id="add-task">
             <img
               class="nav-item-icon"
               src="./components/icons/plus-solid.svg"
               alt="Add task icon"
             />
             <span class="nav-item-title">Add task</span>
-          </div>
-          <div class="sidebar-nav-item" id="today">
+          </button>
+          <button class="sidebar-nav-item" id="today">
             <img
               class="nav-item-icon"
               src="./components/icons/calendar-day-solid.svg"
               alt="Today icon"
             />
             <span class="nav-item-title">Today</span>
-          </div>
-          <div class="sidebar-nav-item" id="upcoming">
+          </button>
+          <button class="sidebar-nav-item" id="upcoming">
             <img
               class="nav-item-icon"
               src="./components/icons/calendar-days-solid.svg"
               alt="Upcoming icon"
             />
             <span class="nav-item-title">Upcoming</span>
-          </div>
-          <div class="sidebar-nav-item" id="important">
+          </button>
+          <button class="sidebar-nav-item" id="important">
             <img
               class="nav-item-icon"
               src="./components/icons/circle-exclamation-solid.svg"
               alt="Important icon"
             />
             <span class="nav-item-title">Important</span>
-          </div>
-          <div class="sidebar-nav-item" id="completed">
+          </button>
+          <button class="sidebar-nav-item" id="completed">
             <img
               class="nav-item-icon"
               src="./components/icons/calendar-check-regular.svg"
               alt="Completed icon"
             />
             <span class="nav-item-title">Completed</span>
-          </div>
+          </button>
         </div>
         <div class="sidebar-nav-projects-section">
           <h2 class="projects">Projects</h2>
@@ -60,21 +60,23 @@
               placeholder="Add New Project"
               required
             />
-            <img
-              class="new-project-btn"
-              src="./components/icons/plus-solid.svg"
-              alt="Add project icon"
-            />
+            <button id="add-project-btn">
+              <img
+                class="new-project-btn"
+                src="./components/icons/plus-solid.svg"
+                alt="Add project icon"
+              />
+            </button>
           </div>
           <div class="sidebar-nav-projects">
-            <div class="sidebar-nav-project" id="all-tasks">
+            <button class="sidebar-nav-project" id="all-tasks">
               <img
                 class="nav-item-icon"
                 src="./components/icons/folder-open-solid.svg"
                 alt="open folder"
               />
               <span class="nav-item-title">All Tasks</span>
-            </div>
+            </button>
           </div>
         </div>
       </aside>
@@ -84,11 +86,11 @@
         <dialog>
           <form method="dialog" id="task-form">
             <label for="task-title-input">Task Name:</label>
-            <input type="text" id="task-title-input" placeholder="Enter task name">
+            <input type="text" id="task-title-input" placeholder="Enter task name" required>
             <label for="task-description-input">Description:</label>
-            <textarea id="task-description-input" placeholder="Add description or notes" rows="5" cols="40"></textarea>
+            <textarea id="task-description-input" placeholder="Add description or notes" rows="5" cols="40" required></textarea>
             <label for="task-due-date-input">Due Date:</label>
-            <input type="date" id="task-due-date-input">
+            <input type="date" id="task-due-date-input" required>
             <label for="task-priority-input">Priority:</label>
             <select id="task-priority-input">
               <option value="" disabled>Choose task priority</option>
@@ -101,7 +103,7 @@
               <option value="" disabled>Select to which project the task belongs</option>
             </select>
             <div class="form-btns">
-              <button type="button" class="form-btn" id="add-task-btn">Add Task</button>
+              <button type="submit" class="form-btn" id="add-task-btn">Add Task</button>
               <button type="button" class="form-btn" id="cancel-task-btn">Cancel</button>
             </div>
           </form>

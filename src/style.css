@@ -44,12 +44,13 @@
 }
 
 .sidebar-nav-item, .sidebar-nav-project {
-  cursor: pointer;
   display: flex;
   align-items: center;
   gap: 10px;
   padding: .4em;
   border-radius: 5px;
+  font-size: 1.3rem;
+  width: 100%;
 }
 
 .sidebar-nav-item:hover, .sidebar-nav-project:hover {
@@ -80,8 +81,9 @@
   padding: 10px;
 }
 
-.new-project-btn {
-  cursor: pointer;
+#add-project-btn {
+  display: flex;
+  align-items: center;
 }
 
 main {
@@ -103,6 +105,7 @@ main {
 
 .task-card {
   position: relative;
+  display: flex;
   background-color: var(--accent-color);
   color: white;
   border-radius: 10px;
@@ -138,12 +141,9 @@ main {
   cursor: pointer;
 }
 
-/* .task-card-icon:hover {
-  color: white;
-} */
-
 .project-name {
   display: inline-block;
+  font-size: 1.2rem;
 }
 
 .round {
@@ -200,34 +200,31 @@ main {
 }
 
 .main-content {
-  padding: .6em;
-  padding-left: 2em;
+  padding: 1em 2em;
   display: flex;
   flex-direction: column;
 }
 
 .due-date {
   display: inline-block;
-  margin-top: auto;
+  margin-top: 1em;
 }
 
-/* .task-card::before {
-  height: 100%;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-} */
-
 .right-section {
-  padding: 1em;
+  padding: 1em 2em;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: flex-end;
+  margin-left: auto;
 }
 
 .card-actions {
   display: flex;
   gap: 15px;
+}
+
+.edit-btn:hover svg path, .delete-btn:hover {
+  fill: white;
 }
 
 dialog {
@@ -277,4 +274,13 @@ input:not(.new-project-input), textarea, select {
 
 ::backdrop {
   backdrop-filter: blur(1px);
+}
+
+button {
+  background: none;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  color: white;
+  cursor: pointer;
 }

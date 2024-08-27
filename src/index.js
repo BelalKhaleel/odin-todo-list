@@ -14,6 +14,7 @@ document.addEventListener('click', (e) => {
  
   }
   if (e.target.closest('#add-task')) {
+    form.reset();
     modal.showModal();
     console.log(projectsList)
     projectsList.forEach(project => createProjectOption(project));
@@ -21,8 +22,7 @@ document.addEventListener('click', (e) => {
   if (e.target.closest('#add-task-btn')) {
     addTask();
     console.log(projectsList);
-    modal.close();
-    form.reset();
+    // modal.close();
   }
   if (e.target.closest('#cancel-task-btn')) {
     modal.close();

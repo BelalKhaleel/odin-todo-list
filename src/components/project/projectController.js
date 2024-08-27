@@ -7,7 +7,7 @@ const allTasks = Project('All Tasks');
 const projectsList = [allTasks];
 
 function displayProject(title) {
-  const project = document.createElement('div');
+  const project = document.createElement('button');
   project.classList.add('sidebar-nav-project');
   const projectTitle = document.createElement('span');
   projectTitle.classList.add('nav-item-title');
