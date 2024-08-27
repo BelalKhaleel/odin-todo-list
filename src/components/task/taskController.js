@@ -23,15 +23,22 @@ function displayTask(task) {
 const taskCard = document.createElement('div');
 taskCard.className = 'task-card';
 
-const priority = document.createElement('div');
-priority.className = 'priority';
 if (task.priority === 'high') {
-  priority.style.backgroundColor = 'red';
+  taskCard.classList.add('high-priority');
 } else if (task.priority === 'low') {
-  priority.style.backgroundColor = 'green';
+  taskCard.classList.add('low-priority');
 } else {
-  priority.style.backgroundColor = 'yellow';
+  taskCard.classList.add('medium-priority');
 }
+// const priority = document.createElement('div');
+// priority.className = 'priority';
+// if (task.priority === 'high') {
+//   priority.style.backgroundColor = 'red';
+// } else if (task.priority === 'low') {
+//   priority.style.backgroundColor = 'green';
+// } else {
+//   priority.style.backgroundColor = 'yellow';
+// }
 
 const mainContent = document.createElement('div');
 mainContent.className = 'main-content';

@@ -31,3 +31,10 @@ document.addEventListener('click', (e) => {
     deleteProject(e);
   }
 });
+
+newProjectInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !newProjectInput.value) {
+    addProject();
+    newProjectInput.value = '';
+  }
+})

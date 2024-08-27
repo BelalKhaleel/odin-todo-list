@@ -61,7 +61,7 @@
 }
 
 .nav-item-icon, .trash-nav-icon, .new-project-btn, .task-card-icon {
-  width: .8em;
+  width: 20px;
 }
 
 .trash-nav-icon {
@@ -76,7 +76,6 @@
 }
 
 .new-project-input {
-  width: 12em;
   height: 2em;
   padding: 10px;
 }
@@ -103,13 +102,35 @@ main {
 }
 
 .task-card {
+  position: relative;
   background-color: var(--accent-color);
   color: white;
-  width: 90%;
-  height: 8em;
   border-radius: 10px;
-  display: grid;
-  grid-template-columns: .5fr 10fr 2fr;
+  padding-left: 40px;
+}
+
+.task-card::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0px;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 100%;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.high-priority::before {
+  background-color: red;
+}
+
+.medium-priority::before {
+  background-color: yellow;
+}
+
+.low-priority::before {
+  background-color: green;
 }
 
 .task-card-icon {
@@ -117,17 +138,12 @@ main {
   cursor: pointer;
 }
 
-.task-card-icon:hover {
+/* .task-card-icon:hover {
   color: white;
-}
+} */
 
 .project-name {
   display: inline-block;
-}
-
-.task-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 3px 5px rgba(251, 251, 251, 0.5);
 }
 
 .round {
@@ -195,11 +211,11 @@ main {
   margin-top: auto;
 }
 
-.priority {
+/* .task-card::before {
   height: 100%;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
-}
+} */
 
 .right-section {
   padding: 1em;
