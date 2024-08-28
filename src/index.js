@@ -29,7 +29,6 @@ document.addEventListener('click', (e) => {
   if (e.target.closest('#form-add-task-btn')) {
     if (mode === 'add') {
       addTask();
-      displayAllTasks();
     }
     console.log(projectsList);
   }
@@ -45,7 +44,11 @@ document.addEventListener('click', (e) => {
     console.log(mode);
   }
   if (e.target.closest('.delete-btn')) {
-    console.log(e.target)
+    const task = e.target.closest('.task-card');
+    const projectName = task.querySelector('.project-name').textContent;
+    const projectIndex = projectsList.findIndex(project => project.title === projectName);
+    const taskIndex = projectsList[projectIndex].tasksList;
+    console.log(projectsList[projectIndex])
   }
   localStorage.setItem("projects", JSON.stringify(projectsList));
 });

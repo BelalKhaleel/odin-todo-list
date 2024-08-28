@@ -1,6 +1,7 @@
 import { allTasks } from "../project/projectController";
 
 const taskCards = document.querySelector('.task-cards');
+// const allTasksArray = JSON.parse(localStorage.getItem("projects"))[0].tasksList;
 
 function displayTask(task) {
   const taskCard = document.createElement('div');
@@ -81,13 +82,15 @@ function displayTask(task) {
   projectName.className = 'project-name';
   projectName.textContent = task.project;
   rightSection.append(cardActions, projectName);
-  
-  taskCard.dataset.taskIndex = allTasks.tasksList.indexOf(task);
+  taskCard.dataset.taskId = task.id;
   
   taskCards.appendChild(taskCard);
-  }
-
+}
+console.log(JSON.parse(localStorage.getItem("projects"))[0].tasksList);
+  
   function displayAllTasks() {
+    const tasks = document.querySelectorAll('.task-card');
+    tasks.forEach(task => task.remove());
     const allTasksArray = JSON.parse(localStorage.getItem("projects"))[0].tasksList;
     allTasksArray.forEach(task => displayTask(task));
   }
