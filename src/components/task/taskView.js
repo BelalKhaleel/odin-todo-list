@@ -1,5 +1,3 @@
-import { allTasks } from "../project/projectController";
-
 const taskCards = document.querySelector('.task-cards');
 // const allTasksArray = JSON.parse(localStorage.getItem("projects"))[0].tasksList;
 
@@ -86,7 +84,7 @@ function displayTask(task) {
   
   taskCards.appendChild(taskCard);
 }
-console.log(JSON.parse(localStorage.getItem("projects"))[0].tasksList);
+console.log(JSON.parse(localStorage.getItem("projects")));
   
   function displayAllTasks() {
     const tasks = document.querySelectorAll('.task-card');

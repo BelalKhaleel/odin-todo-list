@@ -19,8 +19,12 @@ function displayProject(title) {
     trashIcon.src = trash;
     project.append(openFolderIcon, projectTitle, trashIcon);
     sidebarNavProjects.appendChild(project);
-    return project;
+    // return project;
   }
+}
+
+function loadProjects() {
+  projectsList.forEach(project => displayProject(project.title));
 }
 
 const projectOptions = document.querySelector('#task-project');
@@ -42,4 +46,4 @@ function displayProjectOptions() {
   projectsList.forEach(project => createProjectOption(project));
 }
 
-export { displayProject, projectOptions, createProjectOption, displayProjectOptions };
+export { displayProject, loadProjects, projectOptions, createProjectOption, displayProjectOptions };

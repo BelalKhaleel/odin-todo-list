@@ -3,7 +3,7 @@ import { displayProject } from './projectView';
 
 const allTasks = Project('All Tasks');
 let projectsList = JSON.parse(localStorage.getItem("projects")) || [allTasks];
-localStorage.setItem("projects", JSON.stringify(projectsList));
+saveProjectsToLocalStorage();
 
 const newProjectInput = document.querySelector('.new-project-input');
 
@@ -12,7 +12,7 @@ function addProject() {
   console.log(newProject);
   if (projectsList.some(project => project.title === newProject.title)) return;
   projectsList.push(newProject);
-  console.log(projectsList)
+  console.log(projectsList);
   displayProject(newProject.title)
 }
 
@@ -24,4 +24,8 @@ function deleteProject(e) {
   project.remove();
 }
 
-export { addProject, allTasks, projectsList, newProjectInput, deleteProject };
+function saveProjectsToLocalStorage() {
+  localStorage.setItem("projects", JSON.stringify(projectsList));
+}
+
+export { addProject, allTasks, projectsList, newProjectInput, saveProjectsToLocalStorage, deleteProject };
