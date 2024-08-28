@@ -1,7 +1,7 @@
 import { addProject, deleteProject, newProjectInput, projectsList, saveProjectsToLocalStorage } from './components/project/projectController.js';
 import { createProjectOption, displayProjectOptions, displayProject, loadProjects } from './components/project/projectView.js';
 import { addTask, deleteTask } from './components/task/taskController.js';
-import { displayAllTasks } from './components/task/taskView.js';
+import { displayAllTasks, displayTask } from './components/task/taskView.js';
 import './style.css';
 
 const modal = document.querySelector('dialog');
@@ -63,4 +63,9 @@ newProjectInput.addEventListener('keydown', e => {
   }
 });
 
-document.addEventListener('DOMContentLoaded', loadProjects);
+document.addEventListener('DOMContentLoaded', () => {
+  loadProjects();
+  console.log(projectsList)
+  const allTasks = projectsList[0].tasksList;
+  allTasks.forEach(task => displayTask(task));
+});

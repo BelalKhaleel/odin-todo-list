@@ -20,6 +20,26 @@ function deleteProject(e) {
   const project = e.target.closest('.sidebar-nav-project');
   const projectTitle = project.querySelector('.nav-item-title').textContent;
   const index = projectsList.findIndex(project => project.title === projectTitle);
+  if (index > -1) {
+    const projectTasks = projectsList[index].tasksList;
+    const allTasks = projectsList[0].tasksList;
+
+    projectTasks.forEach(task => {
+      const taskIndexInAllTasks = allTasks.findIndex(t => t.id === task.id);
+      if (taskIndexInAllTasks > -1) {
+        allTasks.splice(taskIndexInAllTasks, 1);
+      }
+    });
+  }
+
+  const taskCards = document.querySelectorAll('.task-card');
+  taskCards.forEach(card => {
+    const cardProjectName = card.querySelector('.project-name').textContent;
+    if (cardProjectName === projectTitle) {
+      card.remove();
+    }
+  });
+
   projectsList.splice(index, 1);
   project.remove();
 }
