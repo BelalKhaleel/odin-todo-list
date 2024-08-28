@@ -1,6 +1,6 @@
 import { addProject, deleteProject, newProjectInput, projectsList, saveProjectsToLocalStorage } from './components/project/projectController.js';
 import { createProjectOption, displayProjectOptions, displayProject, loadProjects } from './components/project/projectView.js';
-import { addTask } from './components/task/taskController.js';
+import { addTask, deleteTask } from './components/task/taskController.js';
 import { displayAllTasks } from './components/task/taskView.js';
 import './style.css';
 
@@ -49,13 +49,7 @@ document.addEventListener('click', (e) => {
     saveProjectsToLocalStorage();
   }
   if (e.target.closest('.delete-btn')) {
-    const task = e.target.closest('.task-card');
-    const id = task.dataset.taskId;
-    // const projectName = task.querySelector('.project-name').textContent;
-    // const projectIndex = projectsList.findIndex(project => project.title === projectName);
-    // const taskIndex = projectsList[projectIndex].tasksList;
-    // console.log(projectsList[projectIndex])
-    saveProjectsToLocalStorage();
+    deleteTask(e);
   }
 });
 
