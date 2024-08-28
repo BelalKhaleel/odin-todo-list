@@ -1,5 +1,7 @@
-import { addProject, createProjectOption, deleteProject, newProjectInput, displayProjectOptions, projectsList } from './components/project/projectController.js';
+import { addProject, deleteProject, newProjectInput, projectsList } from './components/project/projectController.js';
+import { createProjectOption, displayProjectOptions } from './components/project/projectView.js';
 import { addTask } from './components/task/taskController.js';
+import { displayAllTasks } from './components/task/taskView.js';
 import './style.css';
 
 const modal = document.querySelector('dialog');
@@ -14,7 +16,7 @@ document.addEventListener('click', (e) => {
     newProjectInput.value = '';
   }
   if (e.target.closest('#all-tasks')) {
- 
+    displayAllTasks();
   }
   if (e.target.closest('#nav-add-task')) {
     mode = 'add';
@@ -27,6 +29,7 @@ document.addEventListener('click', (e) => {
   if (e.target.closest('#form-add-task-btn')) {
     if (mode === 'add') {
       addTask();
+      displayAllTasks();
     }
     console.log(projectsList);
   }
@@ -41,6 +44,10 @@ document.addEventListener('click', (e) => {
     modal.showModal();
     console.log(mode);
   }
+  if (e.target.closest('.delete-btn')) {
+    console.log(e.target)
+  }
+  localStorage.setItem("projects", JSON.stringify(projectsList));
 });
 
 newProjectInput.addEventListener('keydown', e => {
@@ -50,4 +57,5 @@ newProjectInput.addEventListener('keydown', e => {
     projectsList.forEach(project => createProjectOption(project));
     newProjectInput.value = '';
   }
-})
+  localStorage.setItem("projects", JSON.stringify(projectsList));
+});

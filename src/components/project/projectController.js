@@ -1,27 +1,9 @@
 import Project from './projectModel';
-import openFolder from '../icons/folder-open-solid.svg';
-import trash from '../icons/trash-solid.svg';
+import { displayProject } from './projectView';
 
-const sidebarNavProjects = document.querySelector('.sidebar-nav-projects');
 const allTasks = Project('All Tasks');
-const projectsList = [allTasks];
-
-function displayProject(title) {
-  const project = document.createElement('button');
-  project.classList.add('sidebar-nav-project');
-  const projectTitle = document.createElement('span');
-  projectTitle.classList.add('nav-item-title');
-  projectTitle.textContent = title;
-  const openFolderIcon = document.createElement('img');
-  openFolderIcon.classList.add('nav-item-icon');
-  openFolderIcon.src = openFolder;
-  const trashIcon = document.createElement('img');
-  trashIcon.classList.add('trash-nav-icon');
-  trashIcon.src = trash;
-  project.append(openFolderIcon, projectTitle, trashIcon);
-  sidebarNavProjects.appendChild(project);
-  return project;
-}
+let projectsList = JSON.parse(localStorage.getItem("projects")) || [allTasks];
+localStorage.setItem("projects", JSON.stringify(projectsList));
 
 const newProjectInput = document.querySelector('.new-project-input');
 
@@ -31,26 +13,7 @@ function addProject() {
   if (projectsList.some(project => project.title === newProject.title)) return;
   projectsList.push(newProject);
   console.log(projectsList)
-  displayProject(newProject.title);
-}
-
-const projectOptions = document.querySelector('#task-project');
-
-function createProjectOption(project) {
-  const option = document.createElement('option');
-  option.classList.add('project-option');
-  const optionValue = project.title.toLowerCase().replace(/\s+/g, '-');
-  option.setAttribute('value', optionValue);
-  option.textContent = project.title;
-  // option.dataset.projectIndex = projectsList.indexOf(project);
-  projectOptions.appendChild(option);
-  return option;
-}
-
-function displayProjectOptions() {
-  const options = document.querySelectorAll('.project-option');
-  options.forEach(option => option.remove());
-  projectsList.forEach(project => createProjectOption(project));
+  displayProject(newProject.title)
 }
 
 function deleteProject(e) {
@@ -61,4 +24,4 @@ function deleteProject(e) {
   project.remove();
 }
 
-export { addProject, allTasks, projectsList, projectOptions, newProjectInput, createProjectOption, displayProjectOptions, deleteProject };
+export { addProject, allTasks, projectsList, newProjectInput, deleteProject };
