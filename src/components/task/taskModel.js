@@ -4,6 +4,7 @@ export default (title, description, dueDate, priority, project) => {
   let isComplete = false;
   const setCompleteStatus = () => isComplete = !isComplete;
   id++;
+  localStorage.setItem('taskId', id);
 
   return {
     id,
