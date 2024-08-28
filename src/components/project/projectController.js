@@ -38,12 +38,19 @@ const projectOptions = document.querySelector('#task-project');
 
 function createProjectOption(project) {
   const option = document.createElement('option');
+  option.classList.add('project-option');
   const optionValue = project.title.toLowerCase().replace(/\s+/g, '-');
   option.setAttribute('value', optionValue);
   option.textContent = project.title;
   // option.dataset.projectIndex = projectsList.indexOf(project);
   projectOptions.appendChild(option);
   return option;
+}
+
+function displayProjectOptions() {
+  const options = document.querySelectorAll('.project-option');
+  options.forEach(option => option.remove());
+  projectsList.forEach(project => createProjectOption(project));
 }
 
 function deleteProject(e) {
@@ -54,4 +61,4 @@ function deleteProject(e) {
   project.remove();
 }
 
-export { addProject, allTasks, projectsList, projectOptions, newProjectInput, createProjectOption, deleteProject };
+export { addProject, allTasks, projectsList, projectOptions, newProjectInput, createProjectOption, displayProjectOptions, deleteProject };

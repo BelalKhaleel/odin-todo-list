@@ -1,4 +1,4 @@
-import { addProject, createProjectOption, deleteProject, newProjectInput, projectOptions, projectsList } from './components/project/projectController.js';
+import { addProject, createProjectOption, deleteProject, newProjectInput, displayProjectOptions, projectsList } from './components/project/projectController.js';
 import { addTask } from './components/task/taskController.js';
 import './style.css';
 
@@ -20,9 +20,7 @@ document.addEventListener('click', (e) => {
     mode = 'add';
     form.reset();
     modal.showModal();
-    // const options = document.querySelectorAll('option:not(first-child');
-    // options.forEach(option => option.remove());
-    projectsList.forEach(project => createProjectOption(project));
+    displayProjectOptions();
     console.log(projectsList)
     console.log(mode);
   }
