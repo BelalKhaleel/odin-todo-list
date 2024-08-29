@@ -26,9 +26,9 @@ function updateTask() {
 }
 
 function deleteTask(e) {
-  const task = e.target.closest('.task-card');
-  const projectName = task.querySelector('.project-name').textContent;
-  const id = parseInt(task.dataset.taskId);
+  const taskCard = e.target.closest('.task-card');
+  const projectName = taskCard.querySelector('.project-name').textContent;
+  const id = parseInt(taskCard.dataset.taskId);
   if (projectName !== 'All Tasks') {
     const project = projectsList.find(p => p.title === projectName);
     const index = project.tasksList.findIndex(t => t.id === id);

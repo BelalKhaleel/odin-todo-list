@@ -1,13 +1,15 @@
 import { addProject, deleteProject, newProjectInput, projectsList, saveProjectsToLocalStorage } from './components/project/projectController.js';
-import { createProjectOption, displayProjectOptions, displayProject, loadProjects, displayProjectTasks } from './components/project/projectView.js';
+import { createProjectOption, displayProjectOptions, loadProjects, displayProjectTasks } from './components/project/projectView.js';
 import { addTask, deleteTask } from './components/task/taskController.js';
-import { displayTask } from './components/task/taskView.js';
+import { displayTask, loadTaskValues } from './components/task/taskView.js';
 import './style.css';
 
 const modal = document.querySelector('dialog');
 const form = document.getElementById('task-form');
 let mode = 'add';
+const formTaskButton = document.getElementById('form-task-btn');
 
+console.log(formTaskButton)
 document.addEventListener('click', (e) => {
   if (e.target.matches('.new-project-btn')) {
     if (!newProjectInput.value) return;
@@ -20,15 +22,22 @@ document.addEventListener('click', (e) => {
   }
   if (e.target.closest('#nav-add-task')) {
     mode = 'add';
+    formTaskButton.textContent = 'Add Task';
     form.reset();
     modal.showModal();
     displayProjectOptions();
     console.log(projectsList)
     console.log(mode);
   }
-  if (e.target.closest('#form-add-task-btn')) {
+  if (e.target.closest('#form-task-btn')) {
     if (mode === 'add') {
       addTask();
+    } else if (mode === 'update') {
+      // task.title = title.value;
+      // task.description = description.value;
+      // task.dueDate = dueDate.value;
+      // task.priority = priority.value;
+      // task.project = taskProject.value;
     }
     console.log(projectsList);
     saveProjectsToLocalStorage();
@@ -42,9 +51,10 @@ document.addEventListener('click', (e) => {
   }
   if (e.target.closest('.edit-btn')) {
     mode = 'update';
+    formTaskButton.textContent = 'Edit Task';
     modal.showModal();
     console.log(mode);
-    saveProjectsToLocalStorage();
+    loadTaskValues(e);
   }
   if (e.target.closest('.delete-btn')) {
     deleteTask(e);

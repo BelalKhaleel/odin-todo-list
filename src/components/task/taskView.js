@@ -1,3 +1,6 @@
+import { projectsList } from "../project/projectController";
+import { createProjectOption } from "../project/projectView";
+
 const taskCards = document.querySelector('.task-cards');
 // const allTasksArray = JSON.parse(localStorage.getItem("projects"))[0].tasksList;
 
@@ -85,4 +88,26 @@ function displayTask(task) {
   taskCards.appendChild(taskCard);
 }
 
-  export { displayTask };
+function loadTaskValues(e) {
+  const taskCard = e.target.closest('.task-card')
+  const projectName = taskCard.querySelector('.project-name').textContent;
+  const id = parseInt(taskCard.dataset.taskId);
+  if (projectName !== 'All Tasks') {
+    const project = projectsList.find(p => p.title === projectName);
+    const index = project.tasksList.findIndex(t => t.id === id);
+    const task = project.tasksList[index];
+    const title = document.getElementById('task-title-input');
+    const description = document.getElementById('task-description-input');
+    const dueDate = document.getElementById('task-due-date-input');
+    const priority = document.getElementById('task-priority-input');
+    const taskProject = document.getElementById('task-project');
+    title.value = task.title;
+    description.value = task.description;
+    dueDate.value = task.dueDate;
+    priority.value = task.priority;
+    projectsList.forEach(project => createProjectOption(project));
+    taskProject.value = task.project;
+  }
+}
+
+  export { displayTask, loadTaskValues };
