@@ -1,7 +1,7 @@
 import { addProject, deleteProject, newProjectInput, projectsList, saveProjectsToLocalStorage } from './components/project/projectController.js';
-import { createProjectOption, displayProjectOptions, displayProject, loadProjects } from './components/project/projectView.js';
+import { createProjectOption, displayProjectOptions, displayProject, loadProjects, displayProjectTasks } from './components/project/projectView.js';
 import { addTask, deleteTask } from './components/task/taskController.js';
-import { displayAllTasks, displayTask } from './components/task/taskView.js';
+import { displayTask } from './components/task/taskView.js';
 import './style.css';
 
 const modal = document.querySelector('dialog');
@@ -13,12 +13,10 @@ document.addEventListener('click', (e) => {
     if (!newProjectInput.value) return;
     addProject();
     newProjectInput.value = '';
-    const projects = JSON.parse(localStorage.getItem("projects"));
-    projects.forEach(project => displayProject(project.title));
     saveProjectsToLocalStorage();
   }
-  if (e.target.closest('#all-tasks')) {
-    displayAllTasks();
+  if (e.target.closest('.sidebar-nav-project')) {
+    displayProjectTasks();
   }
   if (e.target.closest('#nav-add-task')) {
     mode = 'add';

@@ -46,4 +46,14 @@ function displayProjectOptions() {
   projectsList.forEach(project => createProjectOption(project));
 }
 
-export { displayProject, loadProjects, projectOptions, createProjectOption, displayProjectOptions };
+function displayProjectTasks() {
+  const project = e.target.closest('.sidebar-nav-project');
+  const projectTitle = project.querySelector('.nav-item-title').textContent;
+  const index = projectsList.findIndex(project => project.title === projectTitle);
+  const taskCards = document.querySelectorAll('.task-card');
+  taskCards.forEach(task => task.remove());
+  const tasks = JSON.parse(localStorage.getItem("projects"))[index].tasksList;
+  tasks.forEach(task => displayTask(task));
+}
+
+export { displayProject, loadProjects, projectOptions, createProjectOption, displayProjectOptions, displayProjectTasks };

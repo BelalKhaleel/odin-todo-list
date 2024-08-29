@@ -84,13 +84,5 @@ function displayTask(task) {
   
   taskCards.appendChild(taskCard);
 }
-console.log(JSON.parse(localStorage.getItem("projects")));
-  
-  function displayAllTasks() {
-    const tasks = document.querySelectorAll('.task-card');
-    tasks.forEach(task => task.remove());
-    const allTasksArray = JSON.parse(localStorage.getItem("projects"))[0].tasksList;
-    allTasksArray.forEach(task => displayTask(task));
-  }
 
-  export { displayTask, displayAllTasks };
+  export { displayTask };
