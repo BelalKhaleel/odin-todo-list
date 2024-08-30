@@ -34,28 +34,28 @@ document.addEventListener('click', (e) => {
       addTask();
     } else if (mode === 'update') {
       console.log(taskId);
-      let task = null;
 
       for (const project of projectsList) {
         if (project.tasksList) {
-          task = project.tasksList.find(t => t.id === taskId);
-          if (task) break;
+          const task = project.tasksList.find(t => t.id === taskId);
+          if (task) {
+            const title = document.getElementById('task-title-input');
+            const description = document.getElementById('task-description-input');
+            const dueDate = document.getElementById('task-due-date-input');
+            const priority = document.getElementById('task-priority-input');
+            const taskProject = document.getElementById('task-project');
+              task.title = title.value;
+              task.description = description.value;
+              task.dueDate = dueDate.value;
+              task.priority = priority.value;
+              task.project= taskProject.value;
+          }
         }
       }
 
-      console.log(task);
-      const title = document.getElementById('task-title-input');
-      const description = document.getElementById('task-description-input');
-      const dueDate = document.getElementById('task-due-date-input');
-      const priority = document.getElementById('task-priority-input');
-      const taskProject = document.getElementById('task-project');
-        task.title = title.value;
-        task.description = description.value;
-        task.dueDate = dueDate.value;
-        task.priority = priority.value;
-        task.project= taskProject.value;
+      // console.log(task);
 
-      updateTaskCard(task);
+      // updateTaskCard(task);
     }
     saveProjectsToLocalStorage();
   }
