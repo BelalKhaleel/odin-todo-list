@@ -99,4 +99,4 @@ function deleteTask(e) {
   saveProjectsToLocalStorage();
 }
 
-export { addTask, editTask, deleteTask };
+export { getAllTasks, addTask, editTask, deleteTask };
