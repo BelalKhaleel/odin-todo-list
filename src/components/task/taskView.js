@@ -1,5 +1,6 @@
-import { projectsList } from "../project/projectController";
+import { projectsList, saveProjectsToLocalStorage } from "../project/projectController";
 import { displayProjectOptions } from "../project/projectView";
+import { getAllTasks } from "./taskController";
 
 const taskCards = document.querySelector(".task-cards");
 
@@ -26,27 +27,33 @@ function displayTask(task) {
 
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
-  checkbox.checked = false;
-  checkbox.id = "checkbox";
+  checkbox.checked = task.isComplete;
+  checkbox.id = `checkbox-${task.id}`;
 
   const label = document.createElement("label");
-  label.setAttribute("for", "checkbox");
+  label.setAttribute("for", `checkbox-${task.id}`);
 
   round.append(checkbox, label);
 
   const title = document.createElement("h3");
   title.className = "task-title";
   title.textContent = task.title;
-
+  
   upperSection.append(round, title);
-
+  
   const description = document.createElement("p");
   description.className = "task-description";
   description.textContent = task.description;
-
+  
   const dueDate = document.createElement("span");
   dueDate.className = "due-date";
   dueDate.textContent = task.dueDate;
+  
+  if (task.isComplete) {
+    title.classList.add("strikethrough");
+    description.classList.add("strikethrough");
+    dueDate.classList.add("strikethrough");
+  }
 
   mainContent.append(upperSection, description, dueDate);
 
@@ -148,11 +155,32 @@ function clearTaskCards() {
   taskCards.forEach((task) => task.remove());
 }
 
-// function displayImportantTasks() {
-//   clearTaskCards();
-//   getAllTasks()
-//     .filter((task) => task.priority === "high")
-//     .forEach((task) => displayTask(task));
-// }
+function toggleCheckbox(e) {
+  const taskCard = e.target.closest(".task-card");
+  const projectName = taskCard.querySelector(".project-name").textContent;
+  const id = parseInt(taskCard.dataset.taskId);
+  const isChecked = e.target.checked;
+  if (projectName !== "All Tasks") {
+    const project = projectsList.find((p) => p.title === projectName);
+    const task = project.tasksList.find((t) => t.id === id);
+    if (task) {
+      task.isComplete = isChecked;
+    }
+  }
+  const task = getAllTasks().find((t) => t.id === id);
+  if (task) {
+    task.isComplete = isChecked;
+  }
+  if (task.isComplete) {
+    taskCard.querySelector('.task-title').classList.add("strikethrough");
+    taskCard.querySelector('.task-description').classList.add("strikethrough");
+    taskCard.querySelector('.due-date').classList.add("strikethrough");
+  } else {
+    taskCard.querySelector('.task-title').classList.remove("strikethrough");
+    taskCard.querySelector('.task-description').classList.remove("strikethrough");
+    taskCard.querySelector('.due-date').classList.remove("strikethrough");
+  }
+  saveProjectsToLocalStorage();
+}
 
-export { displayTask, loadTaskValues, updateTaskCard, clearTaskCards, taskId };
+export { displayTask, loadTaskValues, updateTaskCard, clearTaskCards, toggleCheckbox, taskId };

@@ -22,6 +22,7 @@ import {
   clearTaskCards,
   displayTask,
   loadTaskValues,
+  toggleCheckbox,
 } from "./components/task/taskView.js";
 import { format, isEqual, isAfter } from "date-fns";
 import "./style.css";
@@ -77,6 +78,9 @@ document.addEventListener("click", (e) => {
   if (e.target.closest(".delete-btn")) {
     deleteTask(e);
   }
+  if (e.target.type === "checkbox") {
+    toggleCheckbox(e);
+  }
   if (e.target.closest("#today")) {
     filterTasks((task) => isEqual(task.dueDate, today));
   }
@@ -85,6 +89,9 @@ document.addEventListener("click", (e) => {
   }
   if (e.target.closest("#important")) {
     filterTasks((task) => task.priority === "high");
+  }
+  if (e.target.closest('#completed')) {
+    filterTasks((task) =>  task.isComplete === true);
   }
 });
 

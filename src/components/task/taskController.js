@@ -13,6 +13,7 @@ const priority = document.getElementById("task-priority-input");
 const project = document.getElementById("task-project");
 
 function getAllTasks() {
+  saveProjectsToLocalStorage();
   return projectsList[0].tasksList;
 }
 
