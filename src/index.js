@@ -32,6 +32,8 @@ document.addEventListener('click', (e) => {
   if (e.target.closest('#form-task-btn')) {
     if (mode === 'add') {
       addTask();
+      const task = addTask();
+      displayTask(task);
     } else if (mode === 'update') {
       console.log(taskId);
 
@@ -44,18 +46,37 @@ document.addEventListener('click', (e) => {
             const dueDate = document.getElementById('task-due-date-input');
             const priority = document.getElementById('task-priority-input');
             const taskProject = document.getElementById('task-project');
+            const oldProject = project; // Save the reference to the old project before updating
+            const newProjectName = taskProject.value;
+            console.log(oldProject, newProjectName, task.project.toLowerCase().replace(/\s+/g, '-'))
+            // Check if the project has been changed
+              if (task.project.toLowerCase().replace(/\s+/g, '-') !== newProjectName) {
+                // Remove the task from the old project's task list
+                if (oldProject.title !== 'All Tasks') {
+                  const taskIndex = oldProject.tasksList.indexOf(task);
+                  if (taskIndex > -1) {
+                    oldProject.tasksList.splice(taskIndex, 1);
+                  }
+    
+                  // Find the new project and add the task to its task list
+                  const newProject = projectsList.find(p => p.title === newProjectName);
+                  if (newProject && newProject.title !== 'All Tasks') {
+                    newProject.tasksList.push(task);
+                  }
+                }
+              }
               task.title = title.value;
               task.description = description.value;
               task.dueDate = dueDate.value;
               task.priority = priority.value;
               task.project= taskProject.value;
+              updateTaskCard(task);
           }
         }
       }
 
       // console.log(task);
 
-      // updateTaskCard(task);
     }
     saveProjectsToLocalStorage();
   }

@@ -19,6 +19,7 @@ function addTask() {
     allTasks.push(task);
   }
   console.log(task);
+  return task;
 }
 
 function updateTask() {
@@ -36,8 +37,8 @@ function deleteTask(e) {
   }
   const allTasks = projectsList[0].tasksList;
   const index = allTasks.findIndex(t => t.id === id);
-  allTasks.splice(index, 1);
-  task.remove();
+  if (index > -1) allTasks.splice(index, 1);
+  taskCard.remove();
   saveProjectsToLocalStorage();
 }
 

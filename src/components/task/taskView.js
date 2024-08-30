@@ -124,11 +124,21 @@ function updateTaskCard(task) {
   
   if (taskCard) {
     // Update the elements within the task card
-    taskCard.querySelector('.task-title-input').textContent = task.title;
-    taskCard.querySelector('.task-description-input').textContent = task.description;
-    taskCard.querySelector('.task-due-date-input').textContent = task.dueDate;
-    taskCard.querySelector('.task-priority-input').textContent = task.priority;
-    taskCard.querySelector('.task-project').textContent = task.project;
+    taskCard.querySelector('.task-title').textContent = task.title;
+    taskCard.querySelector('.task-description').textContent = task.description;
+    taskCard.querySelector('.due-date').value = task.dueDate;
+    // First, remove any existing priority classes
+    taskCard.classList.remove('high-priority', 'medium-priority', 'low-priority');
+
+    // Then, add the new priority class based on the updated task priority
+    if (task.priority === 'high') {
+      taskCard.classList.add('high-priority');
+    } else if (task.priority === 'low') {
+      taskCard.classList.add('low-priority');
+    } else {
+      taskCard.classList.add('medium-priority');
+    }
+    taskCard.querySelector('.project-name').textContent = task.project;    
   }
 }
 
