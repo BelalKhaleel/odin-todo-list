@@ -12,6 +12,15 @@
   --accent-color: rgb(73, 100, 158);
 }
 
+@font-face {
+  font-family: 'Nunito';
+  src: url(./fonts/Nunito/static/Nunito-Regular.ttf);
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+}
+
 .container {
   min-height: 100vh;
   background-color: lightgoldenrodyellow;
