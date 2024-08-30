@@ -3,7 +3,8 @@ import {
   projectsList,
   saveProjectsToLocalStorage,
 } from "../project/projectController";
-import { taskId, updateTaskCard } from "./taskView";
+import { taskId, updateTaskCard, displayTask } from "./taskView";
+import { clearTaskCards } from "./taskView";
 
 const title = document.getElementById("task-title-input");
 const description = document.getElementById("task-description-input");
@@ -99,4 +100,11 @@ function deleteTask(e) {
   saveProjectsToLocalStorage();
 }
 
-export { getAllTasks, addTask, editTask, deleteTask };
+function filterTasks(filterCriteria) {
+  clearTaskCards();
+  getAllTasks()
+    .filter(filterCriteria)
+    .forEach((task) => displayTask(task));
+}
+
+export { getAllTasks, addTask, editTask, deleteTask, filterTasks };

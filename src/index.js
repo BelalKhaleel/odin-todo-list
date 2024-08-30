@@ -16,6 +16,7 @@ import {
   addTask,
   deleteTask,
   editTask,
+  filterTasks,
 } from "./components/task/taskController.js";
 import {
   clearTaskCards,
@@ -29,6 +30,7 @@ const modal = document.querySelector("dialog");
 const form = document.getElementById("task-form");
 let mode = "add";
 const formTaskButton = document.getElementById("form-task-btn");
+const today = format(new Date(), "yyyy-MM-dd");
 
 console.log(formTaskButton);
 document.addEventListener("click", (e) => {
@@ -76,24 +78,13 @@ document.addEventListener("click", (e) => {
     deleteTask(e);
   }
   if (e.target.closest("#today")) {
-    const today = format(new Date(), "yyyy-MM-dd");
-    clearTaskCards();
-    getAllTasks()
-      .filter((task) => isEqual(task.dueDate, today))
-      .forEach((task) => displayTask(task));
+    filterTasks((task) => isEqual(task.dueDate, today));
   }
   if (e.target.closest("#upcoming")) {
-    const today = format(new Date(), "yyyy-MM-dd");
-    clearTaskCards();
-    getAllTasks()
-      .filter((task) => isAfter(task.dueDate, today))
-      .forEach((task) => displayTask(task));
+    filterTasks((task) => isAfter(task.dueDate, today))
   }
   if (e.target.closest("#important")) {
-    clearTaskCards();
-    getAllTasks()
-      .filter((task) => task.priority === "high")
-      .forEach((task) => displayTask(task));
+    filterTasks((task) => task.priority === "high");
   }
 });
 
