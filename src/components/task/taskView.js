@@ -1,5 +1,5 @@
 import { projectsList } from "../project/projectController";
-import { createProjectOption } from "../project/projectView";
+import { displayProjectOptions } from "../project/projectView";
 
 const taskCards = document.querySelector('.task-cards');
 // const allTasksArray = JSON.parse(localStorage.getItem("projects"))[0].tasksList;
@@ -88,13 +88,21 @@ function displayTask(task) {
   taskCards.appendChild(taskCard);
 }
 
+let taskId;
+
 function loadTaskValues(e) {
   const taskCard = e.target.closest('.task-card')
   const projectName = taskCard.querySelector('.project-name').textContent;
   const id = parseInt(taskCard.dataset.taskId);
+  let project;
+  let index;
   if (projectName !== 'All Tasks') {
-    const project = projectsList.find(p => p.title === projectName);
-    const index = project.tasksList.findIndex(t => t.id === id);
+    project = projectsList.find(p => p.title === projectName);
+    index = project.tasksList.findIndex(t => t.id === id);
+  } else {
+    project = projectsList[0];
+    index = project.tasksList.findIndex(t => t.id === id);
+  }
     const task = project.tasksList[index];
     const title = document.getElementById('task-title-input');
     const description = document.getElementById('task-description-input');
@@ -105,9 +113,23 @@ function loadTaskValues(e) {
     description.value = task.description;
     dueDate.value = task.dueDate;
     priority.value = task.priority;
-    projectsList.forEach(project => createProjectOption(project));
-    taskProject.value = task.project;
+    displayProjectOptions();
+    taskProject.value = task.project.toLowerCase().replace(/\s+/g, '-');
+    taskId = task.id;
+}
+
+function updateTaskCard(task) {
+  // Find the task card element
+  const taskCard = document.querySelector(`.task-card[data-task-id="${task.id}"]`);
+  
+  if (taskCard) {
+    // Update the elements within the task card
+    taskCard.querySelector('.task-title-input').textContent = task.title;
+    taskCard.querySelector('.task-description-input').textContent = task.description;
+    taskCard.querySelector('.task-due-date-input').textContent = task.dueDate;
+    taskCard.querySelector('.task-priority-input').textContent = task.priority;
+    taskCard.querySelector('.task-project').textContent = task.project;
   }
 }
 
-  export { displayTask, loadTaskValues };
+  export { displayTask, loadTaskValues, updateTaskCard, taskId };

@@ -1,6 +1,7 @@
 import openFolder from '../icons/folder-open-solid.svg';
 import trash from '../icons/trash-solid.svg';
 import { projectsList } from './projectController';
+import { displayTask } from '../task/taskView';
 
 const sidebarNavProjects = document.querySelector('.sidebar-nav-projects');
 
@@ -46,7 +47,7 @@ function displayProjectOptions() {
   projectsList.forEach(project => createProjectOption(project));
 }
 
-function displayProjectTasks() {
+function displayProjectTasks(e) {
   const project = e.target.closest('.sidebar-nav-project');
   const projectTitle = project.querySelector('.nav-item-title').textContent;
   const index = projectsList.findIndex(project => project.title === projectTitle);

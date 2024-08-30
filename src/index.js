@@ -1,7 +1,7 @@
 import { addProject, deleteProject, newProjectInput, projectsList, saveProjectsToLocalStorage } from './components/project/projectController.js';
 import { createProjectOption, displayProjectOptions, loadProjects, displayProjectTasks } from './components/project/projectView.js';
 import { addTask, deleteTask } from './components/task/taskController.js';
-import { displayTask, loadTaskValues } from './components/task/taskView.js';
+import { displayTask, loadTaskValues, taskId, updateTaskCard } from './components/task/taskView.js';
 import './style.css';
 
 const modal = document.querySelector('dialog');
@@ -18,7 +18,7 @@ document.addEventListener('click', (e) => {
     saveProjectsToLocalStorage();
   }
   if (e.target.closest('.sidebar-nav-project')) {
-    displayProjectTasks();
+    displayProjectTasks(e);
   }
   if (e.target.closest('#nav-add-task')) {
     mode = 'add';
@@ -33,13 +33,30 @@ document.addEventListener('click', (e) => {
     if (mode === 'add') {
       addTask();
     } else if (mode === 'update') {
-      // task.title = title.value;
-      // task.description = description.value;
-      // task.dueDate = dueDate.value;
-      // task.priority = priority.value;
-      // task.project = taskProject.value;
+      console.log(taskId);
+      let task = null;
+
+      for (const project of projectsList) {
+        if (project.tasksList) {
+          task = project.tasksList.find(t => t.id === taskId);
+          if (task) break;
+        }
+      }
+
+      console.log(task);
+      const title = document.getElementById('task-title-input');
+      const description = document.getElementById('task-description-input');
+      const dueDate = document.getElementById('task-due-date-input');
+      const priority = document.getElementById('task-priority-input');
+      const taskProject = document.getElementById('task-project');
+        task.title = title.value;
+        task.description = description.value;
+        task.dueDate = dueDate.value;
+        task.priority = priority.value;
+        task.project= taskProject.value;
+
+      updateTaskCard(task);
     }
-    console.log(projectsList);
     saveProjectsToLocalStorage();
   }
   if (e.target.closest('#cancel-task-btn')) {
