@@ -22,6 +22,7 @@ import {
   displayTask,
   loadTaskValues,
 } from "./components/task/taskView.js";
+import { format, isEqual, isAfter } from "date-fns";
 import "./style.css";
 
 const modal = document.querySelector("dialog");
@@ -73,6 +74,13 @@ document.addEventListener("click", (e) => {
   }
   if (e.target.closest(".delete-btn")) {
     deleteTask(e);
+  }
+  if (e.target.closest("#today")) {
+    const today = format(new Date(), "yyyy-MM-dd");
+    clearTaskCards();
+    getAllTasks()
+      .filter((task) => isEqual(task.dueDate, today))
+      .forEach((task) => displayTask(task));
   }
   if (e.target.closest("#important")) {
     clearTaskCards();

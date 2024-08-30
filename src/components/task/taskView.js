@@ -155,4 +155,4 @@ function clearTaskCards() {
 //     .forEach((task) => displayTask(task));
 // }
 
-export { displayTask, loadTaskValues, updateTaskCard, clearTaskCards, displayImportantTasks, taskId };
+export { displayTask, loadTaskValues, updateTaskCard, clearTaskCards, taskId };
