@@ -82,6 +82,13 @@ document.addEventListener("click", (e) => {
       .filter((task) => isEqual(task.dueDate, today))
       .forEach((task) => displayTask(task));
   }
+  if (e.target.closest("#upcoming")) {
+    const today = format(new Date(), "yyyy-MM-dd");
+    clearTaskCards();
+    getAllTasks()
+      .filter((task) => isAfter(task.dueDate, today))
+      .forEach((task) => displayTask(task));
+  }
   if (e.target.closest("#important")) {
     clearTaskCards();
     getAllTasks()
