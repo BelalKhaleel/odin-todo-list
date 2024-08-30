@@ -143,4 +143,16 @@ function updateTaskCard(task) {
   }
 }
 
-export { displayTask, loadTaskValues, updateTaskCard, taskId };
+function clearTaskCards() {
+  const taskCards = document.querySelectorAll(".task-card");
+  taskCards.forEach((task) => task.remove());
+}
+
+// function displayImportantTasks() {
+//   clearTaskCards();
+//   getAllTasks()
+//     .filter((task) => task.priority === "high")
+//     .forEach((task) => displayTask(task));
+// }
+
+export { displayTask, loadTaskValues, updateTaskCard, clearTaskCards, displayImportantTasks, taskId };

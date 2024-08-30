@@ -1,7 +1,7 @@
 import openFolder from "../icons/folder-open-solid.svg";
 import trash from "../icons/trash-solid.svg";
 import { projectsList } from "./projectController";
-import { displayTask } from "../task/taskView";
+import { clearTaskCards, displayTask } from "../task/taskView";
 
 const sidebarNavProjects = document.querySelector(".sidebar-nav-projects");
 
@@ -51,8 +51,7 @@ function displayProjectTasks(e) {
   const index = projectsList.findIndex(
     (project) => project.title === projectTitle
   );
-  const taskCards = document.querySelectorAll(".task-card");
-  taskCards.forEach((task) => task.remove());
+  clearTaskCards();
   const tasks = JSON.parse(localStorage.getItem("projects"))[index].tasksList;
   tasks.forEach((task) => displayTask(task));
 }
