@@ -160,14 +160,15 @@ function toggleCheckbox(e) {
   const projectName = taskCard.querySelector(".project-name").textContent;
   const id = parseInt(taskCard.dataset.taskId);
   const isChecked = e.target.checked;
+  let task;
   if (projectName !== "All Tasks") {
     const project = projectsList.find((p) => p.title === projectName);
-    const task = project.tasksList.find((t) => t.id === id);
+    task = project.tasksList.find((t) => t.id === id);
     if (task) {
       task.isComplete = isChecked;
     }
   }
-  const task = getAllTasks().find((t) => t.id === id);
+  task = getAllTasks().find((t) => t.id === id);
   if (task) {
     task.isComplete = isChecked;
   }
