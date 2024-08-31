@@ -5,6 +5,7 @@ import {
 } from "../project/projectController";
 import { taskId, updateTaskCard, displayTask } from "./taskView";
 import { clearTaskCards } from "./taskView";
+import { displayProjectTasks } from "../project/projectView";
 
 const title = document.getElementById("task-title-input");
 const description = document.getElementById("task-description-input");
@@ -41,48 +42,45 @@ function addTask() {
   if (!isTaskInAllTasks) {
     allTasks.push(task);
   }
-  console.log(task);
   return task;
 }
 
 function editTask() {
-  console.log(taskId);
   projectsList.forEach(p => {
-    if (p.tasksList) {
-      const task = p.tasksList.find((t) => t.id === taskId);
-      if (task) {
-        const oldProject = p;
-        const newProjectName = project.value;
-        console.log(
-          oldProject,
-          newProjectName,
-          task.project.toLowerCase().replace(/\s+/g, "-")
-        );
-        if (
-          task.project.toLowerCase().replace(/\s+/g, "-") !== newProjectName &&
-          oldProject.title !== "All Tasks"
-        ) {
-          const taskIndex = oldProject.tasksList.indexOf(task);
-          if (taskIndex > -1) {
-            oldProject.tasksList.splice(taskIndex, 1);
-          }
+    if (!p.tasksList) return;
 
-          const newProject = projectsList.find(
-            (p) => p.title === newProjectName
-          );
-          if (newProject && newProject.title !== "All Tasks") {
-            newProject.tasksList.push(task);
-          }
-        }
-        task.title = title.value.trim();
-        task.description = description.value.trim();
-        task.dueDate = dueDate.value;
-        task.priority = priority.value;
-        task.project = project.value;
-        updateTaskCard(task);
-      }
+    const task = p.tasksList.find((t) => t.id === taskId);
+    if (!task) return;
+
+    const oldProject = p;
+    const newProjectName = project.value;
+    if (
+      task.project.toLowerCase().replace(/\s+/g, "-") !== newProjectName &&
+      oldProject.title !== "All Tasks"
+    ) {
+      moveTaskToNewProject(oldProject, task, newProjectName);
     }
+    task.title = title.value.trim();
+    task.description = description.value.trim();
+    task.dueDate = dueDate.value;
+    task.priority = priority.value;
+    task.project = project.value;
+    updateTaskCard(task);
   });
+}
+
+function moveTaskToNewProject(oldProject, task, newProjectName) {
+  const taskIndex = oldProject.tasksList.indexOf(task);
+  if (taskIndex > -1) {
+    oldProject.tasksList.splice(taskIndex, 1);
+  }
+
+  const newProject = projectsList.find(
+    (p) => p.title === newProjectName
+  );
+  if (newProject && newProject.title !== "All Tasks") {
+    newProject.tasksList.push(task);
+  }
 }
 
 function deleteTask(e) {

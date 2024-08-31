@@ -3,8 +3,6 @@ import trash from "../icons/trash-solid.svg";
 import { projectsList } from "./projectController";
 import { clearTaskCards, displayTask } from "../task/taskView";
 
-const sidebarNavProjects = document.querySelector(".sidebar-nav-projects");
-
 function displayProject(title) {
   if (title !== "All Tasks") {
     const project = document.createElement("button");
@@ -19,7 +17,7 @@ function displayProject(title) {
     trashIcon.classList.add("trash-nav-icon");
     trashIcon.src = trash;
     project.append(openFolderIcon, projectTitle, trashIcon);
-    sidebarNavProjects.appendChild(project);
+    document.querySelector(".sidebar-nav-projects").appendChild(project);
   }
 }
 
@@ -30,26 +28,24 @@ function loadProjects() {
 const projectOptions = document.querySelector("#task-project");
 
 function createProjectOption(project) {
-  const option = document.createElement("option");
-  option.classList.add("project-option");
-  const optionValue = project.title.toLowerCase().replace(/\s+/g, "-");
-  option.setAttribute("value", optionValue);
-  option.textContent = project.title;
-  projectOptions.appendChild(option);
-  return option;
+  if (project) {
+    const option = document.createElement("option");
+    option.classList.add("project-option");
+    option.setAttribute("value", project.title.toLowerCase().replace(/\s+/g, "-"));
+    option.textContent = project.title;
+    projectOptions.appendChild(option);
+    return option;
+  }
 }
 
 function displayProjectOptions() {
-  const options = document.querySelectorAll(".project-option");
-  options.forEach((option) => option.remove());
+  document.querySelectorAll(".project-option").forEach((option) => option.remove());
   projectsList.forEach((project) => createProjectOption(project));
 }
 
 function displayProjectTasks(e) {
-  const project = e.target.closest(".sidebar-nav-project");
-  const projectTitle = project.querySelector(".nav-item-title").textContent;
   const index = projectsList.findIndex(
-    (project) => project.title === projectTitle
+    (project) => project.title === e.target.closest(".sidebar-nav-project").querySelector(".nav-item-title").textContent
   );
   clearTaskCards();
   const tasks = JSON.parse(localStorage.getItem("projects"))[index].tasksList;

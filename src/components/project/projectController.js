@@ -10,11 +10,9 @@ const newProjectInput = document.querySelector(".new-project-input");
 
 function addProject() {
   const newProject = Project(newProjectInput.value.trim());
-  console.log(newProject);
   if (projectsList.some((project) => project.title === newProject.title))
     return;
   projectsList.push(newProject);
-  console.log(projectsList);
   displayProject(newProject.title);
 }
 
@@ -25,10 +23,9 @@ function deleteProject(e) {
     (project) => project.title === projectTitle
   );
   if (index > -1) {
-    const projectTasks = projectsList[index].tasksList;
     const allTasks = getAllTasks();
 
-    projectTasks.forEach((task) => {
+    projectsList[index].tasksList.forEach((task) => {
       const taskIndexInAllTasks = allTasks.findIndex((t) => t.id === task.id);
       if (taskIndexInAllTasks > -1) {
         allTasks.splice(taskIndexInAllTasks, 1);
@@ -36,10 +33,8 @@ function deleteProject(e) {
     });
   }
 
-  const taskCards = document.querySelectorAll(".task-card");
-  taskCards.forEach((card) => {
-    const cardProjectName = card.querySelector(".project-name").textContent;
-    if (cardProjectName === projectTitle) {
+  document.querySelectorAll(".task-card").forEach((card) => {
+    if (card.querySelector(".project-name").textContent === projectTitle) {
       card.remove();
     }
   });

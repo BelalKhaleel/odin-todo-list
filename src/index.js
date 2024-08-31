@@ -27,13 +27,13 @@ import {
 import { format, isEqual, isAfter } from "date-fns";
 import "./style.css";
 
+const header = document.querySelector('.current-project');
 const modal = document.querySelector("dialog");
 const form = document.getElementById("task-form");
 let mode = "add";
 const formTaskButton = document.getElementById("form-task-btn");
 const today = format(new Date(), "yyyy-MM-dd");
 
-console.log(formTaskButton);
 document.addEventListener("click", (e) => {
   if (e.target.matches(".new-project-btn")) {
     if (!newProjectInput.value) return;
@@ -43,6 +43,7 @@ document.addEventListener("click", (e) => {
   }
   if (e.target.closest(".sidebar-nav-project")) {
     displayProjectTasks(e);
+    header.textContent = e.target.closest('.sidebar-nav-project').querySelector('.nav-item-title').textContent ?? 'All Tasks';
   }
   if (e.target.closest("#nav-add-task")) {
     mode = "add";
@@ -67,6 +68,7 @@ document.addEventListener("click", (e) => {
   if (e.target.closest(".trash-nav-icon")) {
     deleteProject(e);
     saveProjectsToLocalStorage();
+    getAllTasks().forEach((task) => displayTask(task));
   }
   if (e.target.closest(".edit-btn")) {
     mode = "update";
@@ -107,7 +109,5 @@ newProjectInput.addEventListener("keydown", (e) => {
 
 document.addEventListener("DOMContentLoaded", () => {
   loadProjects();
-  console.log(projectsList);
-  const allTasks = getAllTasks();
-  allTasks.forEach((task) => displayTask(task));
+  getAllTasks().forEach((task) => displayTask(task));
 });

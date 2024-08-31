@@ -150,7 +150,7 @@ function updateTaskCard(task) {
   }
 }
 
-function clearTaskCards() {
+const clearTaskCards = () => {
   const taskCards = document.querySelectorAll(".task-card");
   taskCards.forEach((task) => task.remove());
 }
