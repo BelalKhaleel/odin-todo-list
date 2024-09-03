@@ -30,13 +30,15 @@ function addTask() {
   const index = projectsList.findIndex(
     (p) => p.title === project.options[project.selectedIndex].textContent
   );
+  // to add a task to a project other than the All Tasks array
   if (index > 0) projectsList[index].tasksList.push(task);
+
   const allTasks = getAllTasks();
   const isTaskInAllTasks = allTasks.some(
     (t) =>
-      t.title === task.title &&
-      t.description === task.description &&
-      t.dueDate === task.dueDate
+      t.title === task.title 
+    && t.description === task.description 
+    && t.dueDate === task.dueDate
   );
 
   if (!isTaskInAllTasks) {
@@ -46,7 +48,7 @@ function addTask() {
 }
 
 function editTask() {
-  projectsList.forEach(p => {
+  projectsList.forEach((p) => {
     if (!p.tasksList) return;
 
     const task = p.tasksList.find((t) => t.id === taskId);
@@ -75,9 +77,7 @@ function moveTaskToNewProject(oldProject, task, newProjectName) {
     oldProject.tasksList.splice(taskIndex, 1);
   }
 
-  const newProject = projectsList.find(
-    (p) => p.title === newProjectName
-  );
+  const newProject = projectsList.find((p) => p.title === newProjectName);
   if (newProject && newProject.title !== "All Tasks") {
     newProject.tasksList.push(task);
   }

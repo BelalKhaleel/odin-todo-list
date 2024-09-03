@@ -19,7 +19,6 @@ import {
   filterTasks,
 } from "./components/task/taskController.js";
 import {
-  clearTaskCards,
   displayTask,
   loadTaskValues,
   toggleCheckbox,
@@ -33,6 +32,7 @@ const form = document.getElementById("task-form");
 let mode = "add";
 const formTaskButton = document.getElementById("form-task-btn");
 const today = format(new Date(), "yyyy-MM-dd");
+document.getElementById('task-due-date-input').setAttribute('min', today);
 
 document.addEventListener("click", (e) => {
   if (e.target.matches(".new-project-btn")) {
