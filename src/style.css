@@ -86,7 +86,7 @@ body {
 }
 
 .new-project-input {
-  height: 2em;
+  height: 35px;
   padding: 10px;
 }
 
@@ -101,9 +101,30 @@ main {
   color: white;
 }
 
-.current-project {
-  font-size: 2rem;
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 2em;
+}
+
+.main-header .priorities {
+  display: flex;
+  gap: 2rem;
+}
+
+.main-header .priority {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.main-header span::before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 5px;
 }
 
 .task-cards {
