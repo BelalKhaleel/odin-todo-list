@@ -31,23 +31,17 @@ body {
 
 .container {
   min-height: 100vh;
-  background-color: lightgoldenrodyellow;
   display: grid;
-  grid-template-columns: .85fr 4fr;
+  grid-template-columns: 1fr 4fr;
+  color: white;
 }
 
 .sidebar {
   background-color: var(--secondary-color);
   padding: 2em;
-  color: white;
-}
-
-.sidebar-header {
-  font-size: 2rem;
-}
-
-.sidebar-header, .sidebar-nav-tasks {
-  margin-bottom: 1.5em;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
 }
 
 .sidebar-nav-tasks > h2 {
@@ -57,7 +51,6 @@ body {
 .sidebar-nav-tasks, .sidebar-nav-projects-section {
   display: flex;
   flex-direction: column;
-  font-size: 1.3rem;
 }
 
 .sidebar-nav-item, .sidebar-nav-project {
@@ -65,9 +58,7 @@ body {
   align-items: center;
   gap: 10px;
   padding: .4em;
-  border-radius: 5px;
   font-size: 1.3rem;
-  width: 100%;
 }
 
 .sidebar-nav-item:hover, .sidebar-nav-project:hover {
@@ -78,8 +69,40 @@ body {
   margin-bottom: .5em;
 }
 
-.nav-item-icon, .trash-nav-icon, .new-project-btn, .task-card-icon {
+.sidebar-nav-item::before {
+  content: "";
   width: 20px;
+  height: 20px;
+  display: inline-block;
+  background-repeat: no-repeat;
+}
+
+.add-task::before {
+  background-image: url(./components/icons/plus-solid.svg);
+}
+
+.new-project-btn::before {
+  background-image: url(./components/icons/plus-solid.svg);
+}
+
+.today::before {
+  background-image: url(./components/icons/calendar-day-solid.svg);
+}
+
+.upcoming::before {
+  background-image: url(./components/icons/calendar-days-solid.svg);
+}
+
+.important::before {
+  background-image: url(./components/icons/calendar-check-regular.svg);
+}
+
+.completed::before {
+  background-image: url(./components/icons/circle-exclamation-solid.svg);
+}
+
+.open-folder::before {
+  background-image: url(./components/icons/folder-open-solid.svg);
 }
 
 .trash-nav-icon {

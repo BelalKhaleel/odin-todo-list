@@ -10,44 +10,19 @@
         <h1 class="sidebar-header">Task Manager</h1>
         <div class="sidebar-nav-tasks">
           <h2>Tasks</h2>
-          <button class="sidebar-nav-item" id="nav-add-task">
-            <img
-              class="nav-item-icon"
-              src="./components/icons/plus-solid.svg"
-              alt="Add task icon"
-            />
-            <span class="nav-item-title">Add task</span>
+          <button class="sidebar-nav-item add-task">
+            <span class="nav-item-title ">Add task</span>
           </button>
-          <button class="sidebar-nav-item" id="today">
-            <img
-              class="nav-item-icon"
-              src="./components/icons/calendar-day-solid.svg"
-              alt="Today icon"
-            />
+          <button class="sidebar-nav-item today">
             <span class="nav-item-title">Today</span>
           </button>
-          <button class="sidebar-nav-item" id="upcoming">
-            <img
-              class="nav-item-icon"
-              src="./components/icons/calendar-days-solid.svg"
-              alt="Upcoming icon"
-            />
+          <button class="sidebar-nav-item upcoming">
             <span class="nav-item-title">Upcoming</span>
           </button>
-          <button class="sidebar-nav-item" id="important">
-            <img
-              class="nav-item-icon"
-              src="./components/icons/circle-exclamation-solid.svg"
-              alt="Important icon"
-            />
+          <button class="sidebar-nav-item important">
             <span class="nav-item-title">Important</span>
           </button>
-          <button class="sidebar-nav-item" id="completed">
-            <img
-              class="nav-item-icon"
-              src="./components/icons/calendar-check-regular.svg"
-              alt="Completed icon"
-            />
+          <button class="sidebar-nav-item completed">
             <span class="nav-item-title">Completed</span>
           </button>
         </div>
@@ -59,22 +34,13 @@
               type="text"
               placeholder="Add new (unique) project"
               required
+              autofocus
             />
-            <button id="add-project-btn">
-              <img
-                class="new-project-btn"
-                src="./components/icons/plus-solid.svg"
-                alt="Add project icon"
-              />
+            <button class="sidebar-nav-item new-project-btn">
             </button>
           </div>
           <div class="sidebar-nav-projects">
-            <button class="sidebar-nav-project" id="all-tasks">
-              <img
-                class="nav-item-icon"
-                src="./components/icons/folder-open-solid.svg"
-                alt="open folder"
-              />
+            <button class="sidebar-nav-item open-folder sidebar-nav-project">
               <span class="nav-item-title">All Tasks</span>
             </button>
           </div>

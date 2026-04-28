@@ -26,26 +26,29 @@ import {
 import { format, isEqual, isAfter } from "date-fns";
 import "./style.css";
 
-const header = document.querySelector('.current-project');
+const header = document.querySelector(".current-project");
 const modal = document.querySelector("dialog");
 const form = document.getElementById("task-form");
-let mode = "add";
 const formTaskButton = document.getElementById("form-task-btn");
 const today = format(new Date(), "yyyy-MM-dd");
-document.getElementById('task-due-date-input').setAttribute('min', today);
+let mode = "add";
+document.getElementById("task-due-date-input").setAttribute("min", today);
 
 document.addEventListener("click", (e) => {
-  if (e.target.matches(".new-project-btn")) {
+  const button = e.target;
+  if (button.matches(".new-project-btn")) {
     if (!newProjectInput.value) return;
     addProject();
     newProjectInput.value = "";
     saveProjectsToLocalStorage();
   }
-  if (e.target.closest(".sidebar-nav-project")) {
+  if (button.closest(".sidebar-nav-project")) {
     displayProjectTasks(e);
-    header.textContent = e.target.closest('.sidebar-nav-project').querySelector('.nav-item-title').textContent ?? 'All Tasks';
+    header.textContent =
+      button.closest(".sidebar-nav-project").querySelector(".nav-item-title")
+        .textContent ?? "All Tasks";
   }
-  if (e.target.closest("#nav-add-task")) {
+  if (button.closest(".add-task")) {
     mode = "add";
     formTaskButton.textContent = "Add Task";
     form.reset();
@@ -54,7 +57,7 @@ document.addEventListener("click", (e) => {
     console.log(projectsList);
     console.log(mode);
   }
-  if (e.target.closest("#form-task-btn")) {
+  if (button.closest("#form-task-btn")) {
     if (mode === "add") {
       displayTask(addTask());
     } else if (mode === "update") {
@@ -62,38 +65,38 @@ document.addEventListener("click", (e) => {
     }
     saveProjectsToLocalStorage();
   }
-  if (e.target.closest("#cancel-task-btn")) {
+  if (button.closest("#cancel-task-btn")) {
     modal.close();
   }
-  if (e.target.closest(".trash-nav-icon")) {
+  if (button.closest(".trash-nav-icon")) {
     deleteProject(e);
     saveProjectsToLocalStorage();
     getAllTasks().forEach((task) => displayTask(task));
   }
-  if (e.target.closest(".edit-btn")) {
+  if (button.closest(".edit-btn")) {
     mode = "update";
     formTaskButton.textContent = "Edit Task";
     modal.showModal();
     console.log(mode);
     loadTaskValues(e);
   }
-  if (e.target.closest(".delete-btn")) {
+  if (button.closest(".delete-btn")) {
     deleteTask(e);
   }
-  if (e.target.type === "checkbox") {
+  if (button.type === "checkbox") {
     toggleCheckbox(e);
   }
-  if (e.target.closest("#today")) {
+  if (button.closest(".today")) {
     filterTasks((task) => isEqual(task.dueDate, today));
   }
-  if (e.target.closest("#upcoming")) {
-    filterTasks((task) => isAfter(task.dueDate, today))
+  if (button.closest(".upcoming")) {
+    filterTasks((task) => isAfter(task.dueDate, today));
   }
-  if (e.target.closest("#important")) {
+  if (button.closest(".important")) {
     filterTasks((task) => task.priority === "high");
   }
-  if (e.target.closest('#completed')) {
-    filterTasks((task) =>  task.isComplete === true);
+  if (button.closest(".completed")) {
+    filterTasks((task) => task.isComplete === true);
   }
 });
 
