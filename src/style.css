@@ -91,11 +91,11 @@ ul li {
 }
 
 .important::before {
-  background-image: url(./components/icons/calendar-check-regular.svg);
+  background-image: url(./components/icons/circle-exclamation-solid.svg);
 }
 
 .completed::before {
-  background-image: url(./components/icons/circle-exclamation-solid.svg);
+  background-image: url(./components/icons/calendar-check-regular.svg);
 }
 
 .open-folder::before {
