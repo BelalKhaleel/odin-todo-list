@@ -41,11 +41,11 @@ body {
   padding: 2em;
 }
 
-h1 {
+.sidebar h1 {
   margin-bottom: 4rem;
 }
 
-nav {
+.sidebar nav {
   display: flex;
   flex-direction: column;
   gap: 3rem;
@@ -253,6 +253,11 @@ main {
 
 .edit-btn:hover svg path, .delete-btn:hover {
   fill: white;
+}
+
+.task-description {
+  width: 110ch;
+  overflow-wrap: break-word;
 }
 
 .project-name {

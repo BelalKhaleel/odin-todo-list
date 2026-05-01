@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List</title>
   </head>
   <body>
     <div class="container">
@@ -37,8 +38,6 @@
                   class="new-project-input"
                   type="text"
                   placeholder="Add new (unique) project"
-                  required
-                  autofocus
                 />
                 <button class="new-project-btn">+</button>
               </li>
@@ -74,10 +73,10 @@
               <option class="priority-option" value="high">High</option>
             </select>
             <label for="task-project">Select Project of the Task:</label>
-            <select name="" id="task-project">
+            <select id="task-project">
             </select>
             <div class="form-btns">
-              <button type="submit" class="form-btn" id="form-add-task-btn"></button>
+              <button type="submit" class="form-btn" id="form-add-task-btn">Add Task</button>
               <button type="button" class="form-btn" id="cancel-task-btn">Cancel</button>
             </div>
           </form>
