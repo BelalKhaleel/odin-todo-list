@@ -1,11 +1,11 @@
-import Task from "./taskModel";
+import Task from "./model";
 import {
   projectsList,
   saveProjectsToLocalStorage,
-} from "../project/projectController";
-import { taskId, updateTaskCard, displayTask } from "./taskView";
-import { clearTaskCards } from "./taskView";
-import { displayProjectTasks } from "../project/projectView";
+} from "../project/controller";
+import { taskId, updateTaskCard, displayTask } from "./view";
+import { clearTaskCards } from "./view";
+import { displayProjectTasks } from "../project/view";
 
 const title = document.getElementById("task-title-input");
 const description = document.getElementById("task-description-input");

@@ -1,3 +1,13 @@
+class Task {
+  #id = parseInt(localStorage.getItem("taskId")) || 0;
+
+  constructor(title, description, dueDate, priority, project) {
+    this.title = title;
+    this.description = description;
+    this.dueDate = dueDate;
+    this.priority = priority;
+  }
+}
 let id = parseInt(localStorage.getItem('taskId')) || 0;
 
 export default (title, description, dueDate, priority, project) => {

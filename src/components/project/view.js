@@ -1,7 +1,7 @@
 import openFolder from "../icons/folder-open-solid.svg";
 import trash from "../icons/trash-solid.svg";
-import { projectsList } from "./projectController";
-import { clearTaskCards, displayTask } from "../task/taskView";
+import { projectsList } from "./controller";
+import { clearTaskCards, displayTask } from "../task/view";
 
 function displayProject(title) {
   if (title !== "All Tasks") {
