@@ -3,8 +3,7 @@ import {
   projectsList,
   saveProjectsToLocalStorage,
 } from "../project/project-controller";
-import { taskId, updateTaskCard, displayTask } from "./task-view";
-import { clearTaskCards } from "./task-view";
+import { taskId, updateTaskCard, displayTask, clearTaskCards } from "./task-view";
 import { displayProjectTasks } from "../project/project-view";
 
 const title = document.getElementById("task-title-input");

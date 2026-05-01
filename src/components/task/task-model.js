@@ -1,10 +1,11 @@
 export default class Task {
-  static #currentId = parseInt(localStorage.getItem('taskId')) || 0;
+  static #currentId = parseInt(localStorage.getItem("taskId")) || 0;
+  #id;
 
   constructor(title, description, dueDate, priority, project) {
-    this.id = Task.#currentId;
+    this.#id = Task.#currentId;
     Task.#currentId += 1;
-    localStorage.setItem('taskId', Task.#currentId);
+    localStorage.setItem("taskId", Task.#currentId);
     this.title = title;
     this.description = description;
     this.dueDate = dueDate;
@@ -14,29 +15,6 @@ export default class Task {
   }
 
   get id() {
-    return this.id;
+    return this.#id;
   }
 }
-
-// let id = parseInt(localStorage.getItem('taskId')) || 0;
-
-// export default (title, description, dueDate, priority, project) => {
-//   let isComplete = false;
-//   id++;
-//   localStorage.setItem('taskId', id);
-
-//   return {
-//     id,
-//     title,
-//     description,
-//     dueDate,
-//     priority,
-//     project,
-//     get isComplete() {
-//       return isComplete;
-//     },
-//     set isComplete(checkedStatus) {
-//       isComplete = checkedStatus;
-//     }
-//   };
-// };
