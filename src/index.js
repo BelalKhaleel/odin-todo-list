@@ -28,8 +28,8 @@ import "./style.css";
 
 const header = document.querySelector(".current-project");
 const modal = document.querySelector("dialog");
-const form = document.getElementById("task-form");
-const formTaskButton = document.getElementById("form-task-btn");
+const form = document.querySelector("form");
+const formTaskButton = document.getElementById("form-add-task-btn");
 const today = format(new Date(), "yyyy-MM-dd");
 let mode = "add";
 document.getElementById("task-due-date-input").setAttribute("min", today);
@@ -57,7 +57,7 @@ document.addEventListener("click", (e) => {
     console.log(projectsList);
     console.log(mode);
   }
-  if (button.closest("#form-task-btn")) {
+  if (button.closest("#form-add-task-btn")) {
     if (mode === "add") {
       displayTask(addTask());
     } else if (mode === "update") {

@@ -39,18 +39,20 @@ body {
 .sidebar {
   background-color: var(--secondary-color);
   padding: 2em;
-  display: flex;
-  flex-direction: column;
-  gap: 4rem;
 }
 
-.sidebar-nav-tasks > h2 {
-  margin-bottom: .3em;
+h1 {
+  margin-bottom: 4rem;
 }
 
-.sidebar-nav-tasks, .sidebar-nav-projects-section {
+nav {
   display: flex;
   flex-direction: column;
+  gap: 3rem;
+}
+
+ul li {
+  list-style: none;
 }
 
 .sidebar-nav-item, .sidebar-nav-project {
@@ -59,14 +61,13 @@ body {
   gap: 10px;
   padding: .4em;
   font-size: 1.3rem;
+  border-radius: 5px;
+  width: 100%;
 }
 
-.sidebar-nav-item:hover, .sidebar-nav-project:hover {
+.sidebar-nav-item:hover,
+.sidebar-nav-project:hover {
   background-color: #49649e;
-}
-
-.projects {
-  margin-bottom: .5em;
 }
 
 .sidebar-nav-item::before {
@@ -78,10 +79,6 @@ body {
 }
 
 .add-task::before {
-  background-image: url(./components/icons/plus-solid.svg);
-}
-
-.new-project-btn::before {
   background-image: url(./components/icons/plus-solid.svg);
 }
 
@@ -109,34 +106,34 @@ body {
   margin-left: 1em;
 }
 
-.new-project-container {
-  width: fit-content;
+.add-project-container {
   display: flex;
   gap: 10px;
-  margin-bottom: .5em;
+  margin-top: 10px;
 }
 
 .new-project-input {
+  display: inline-block;
   height: 35px;
   padding: 10px;
 }
 
-#add-project-btn {
-  display: flex;
-  align-items: center;
+.new-project-btn {
+  font-size: 2rem;
 }
 
 main {
   padding: 3em;
   background-color: var(--primary-color);
-  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .main-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2em;
 }
 
 .main-header .priorities {
@@ -144,45 +141,12 @@ main {
   gap: 2rem;
 }
 
-.main-header .priority {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
 .main-header span::before {
   content: "";
   display: inline-block;
   width: 10px;
   height: 10px;
-  margin-right: 5px;
-}
-
-.task-cards {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5em;
-}
-
-.task-card {
-  position: relative;
-  display: flex;
-  background-color: var(--accent-color);
-  color: white;
-  border-radius: 10px;
-  padding-left: 40px;
-}
-
-.task-card::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 0px;
-  transform: translateY(-50%);
-  width: 40px;
-  height: 100%;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
+  margin-right: 10px;
 }
 
 .high-priority::before {
@@ -197,61 +161,36 @@ main {
   background-color: #04ff04;
 }
 
-.task-card-icon {
-  width: 1.5em;
-  cursor: pointer;
+.task-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
 }
 
-.task-description, .due-date {
-  margin-left: 2.4em;
-}
-
-.project-name {
-  display: inline-block;
-  font-size: 1.2rem;
-}
-
-.round {
+.task-card {
   position: relative;
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--accent-color);
+  border-radius: 10px;
+  padding-left: 40px;
 }
 
-.round label {
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 50%;
-  cursor: pointer;
-  height: 28px;
-  left: 0;
+.task-card::before {
+  content: '';
   position: absolute;
-  top: 0;
-  width: 28px;
+  left: 0px;
+  width: 40px;
+  height: 100%;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
-.round label:after {
-  border: 2px solid #fff;
-  border-top: none;
-  border-right: none;
-  content: "";
-  height: 6px;
-  left: 7px;
-  opacity: 0;
-  position: absolute;
-  top: 8px;
-  transform: rotate(-45deg);
-  width: 12px;
-}
-
-.round input[type="checkbox"] {
-  visibility: hidden;
-}
-
-.round input[type="checkbox"]:checked + label {
-  background-color: #66bb6a;
-  border-color: #66bb6a;
-}
-
-.round input[type="checkbox"]:checked + label:after {
-  opacity: 1;
+.main-content {
+  padding: 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .upper-section {
@@ -259,20 +198,45 @@ main {
   gap: 25px;
 }
 
-.task-title {
-  padding-top: 4px;
-  margin-bottom: 10px;
+.rounded-checkbox {
+  position: relative;
 }
 
-.main-content {
-  padding: 1em 2em;
-  display: flex;
-  flex-direction: column;
+.rounded-checkbox label {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 28px;
+  position: absolute;
+  top: 0;
+  width: 28px;
 }
 
-.due-date {
-  display: inline-block;
-  margin-top: 1em;
+.rounded-checkbox label:after {
+  border: 2px solid #fff;
+  border-top: none;
+  border-right: none;
+  content: "";
+  height: 6px;
+  position: absolute;
+  left: 7px;
+  top: 8px;
+  transform: rotate(-45deg);
+  width: 12px;
+}
+
+.rounded-checkbox input {
+  visibility: hidden;
+}
+
+.rounded-checkbox input:checked + label {
+  background-color: #66bb6a;
+  border-color: #66bb6a;
+}
+
+.task-description, .due-date {
+  margin-left: 2.4rem;
 }
 
 .right-section {
@@ -280,7 +244,6 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-left: auto;
 }
 
 .card-actions {
@@ -292,13 +255,16 @@ main {
   fill: white;
 }
 
+.project-name {
+  font-size: 1.2rem;
+}
+
 dialog {
-  padding: 2em 4em;
+  padding: 2rem 4rem;
   position: relative;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border-radius: 5px;
   color: var(--primary-color);
   font-size: large;
   font-weight: 900;
@@ -312,7 +278,7 @@ label {
   margin-bottom: .2em;
 }
 
-input:not(.new-project-input), textarea, select {
+form input:not(.new-project-input), textarea, select {
   margin-bottom: 1em;
   padding: .5em;
 }
@@ -326,11 +292,9 @@ input:not(.new-project-input), textarea, select {
 
 .form-btn {
   padding: 1em;
-  cursor: pointer;
   border-radius: 5px;
   background-color: var(--secondary-color);
-  color: white;
-  font-size: .85rem;
+  font-size: 1rem;
 }
 
 .form-btn:hover {
@@ -338,7 +302,7 @@ input:not(.new-project-input), textarea, select {
 }
 
 ::backdrop {
-  backdrop-filter: blur(1px);
+  backdrop-filter: brightness(0.5);
 }
 
 button {
