@@ -1,6 +1,6 @@
-import Project from "./model";
-import { displayProject } from "./view";
-import { getAllTasks } from "../task/controller";
+import Project from "./project-model";
+import { displayProject } from "./project-view";
+import { getAllTasks } from "../task/task-controller";
 
 const allTasks = Project("All Tasks");
 let projectsList = JSON.parse(localStorage.getItem("projects")) || [allTasks];

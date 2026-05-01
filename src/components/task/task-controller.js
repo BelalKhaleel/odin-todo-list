@@ -1,11 +1,11 @@
-import Task from "./model";
+import Task from "./task-model";
 import {
   projectsList,
   saveProjectsToLocalStorage,
-} from "../project/controller";
-import { taskId, updateTaskCard, displayTask } from "./view";
-import { clearTaskCards } from "./view";
-import { displayProjectTasks } from "../project/view";
+} from "../project/project-controller";
+import { taskId, updateTaskCard, displayTask } from "./task-view";
+import { clearTaskCards } from "./task-view";
+import { displayProjectTasks } from "../project/project-view";
 
 const title = document.getElementById("task-title-input");
 const description = document.getElementById("task-description-input");
@@ -20,7 +20,7 @@ function getAllTasks() {
 
 function addTask() {
   if (!title.value || !description.value || !dueDate.value) return;
-  const task = Task(
+  const task = new Task(
     title.value.trim(),
     description.value.trim(),
     dueDate.value,

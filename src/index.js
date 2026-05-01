@@ -4,25 +4,25 @@ import {
   newProjectInput,
   projectsList,
   saveProjectsToLocalStorage,
-} from "./components/project/controller.js";
+} from "./components/project/project-controller.js";
 import {
   createProjectOption,
   displayProjectOptions,
   loadProjects,
   displayProjectTasks,
-} from "./components/project/view.js";
+} from "./components/project/project-view.js";
 import {
   getAllTasks,
   addTask,
   deleteTask,
   editTask,
   filterTasks,
-} from "./components/task/controller.js";
+} from "./components/task/task-controller.js";
 import {
   displayTask,
   loadTaskValues,
   toggleCheckbox,
-} from "./components/task/view.js";
+} from "./components/task/task-view.js";
 import { format, isEqual, isAfter } from "date-fns";
 import "./style.css";
 

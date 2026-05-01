@@ -1,6 +1,6 @@
-import { projectsList, saveProjectsToLocalStorage } from "../project/controller";
-import { displayProjectOptions } from "../project/view";
-import { getAllTasks } from "./controller";
+import { projectsList, saveProjectsToLocalStorage } from "../project/project-controller";
+import { displayProjectOptions } from "../project/project-view";
+import { getAllTasks } from "./task-controller";
 
 const taskCards = document.querySelector(".task-cards");
 
