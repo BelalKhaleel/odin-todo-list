@@ -1,12 +1,17 @@
 import Project from "./project-model";
 import { displayProject } from "./project-view";
-import { getAllTasks } from "../task/task-controller";
+// import { getAllTasks } from "../task/task-controller";
+import TaskController from "../task/task-controller";
 
 const allTasks = Project("All Tasks");
 let projectsList = JSON.parse(localStorage.getItem("projects")) || [allTasks];
 saveProjectsToLocalStorage();
 
 const newProjectInput = document.querySelector(".new-project-input");
+
+function getAllProjects() {
+  return JSON.parse(localStorage.getItem("projects"));
+}
 
 function addProject() {
   const newProject = Project(newProjectInput.value.trim());
@@ -23,7 +28,7 @@ function deleteProject(e) {
     (project) => project.title === projectTitle
   );
   if (index > -1) {
-    const allTasks = getAllTasks();
+    const allTasks = TaskController.getAllTasks;
 
     projectsList[index].tasksList.forEach((task) => {
       const taskIndexInAllTasks = allTasks.findIndex((t) => t.id === task.id);
@@ -44,6 +49,8 @@ function deleteProject(e) {
 }
 
 function saveProjectsToLocalStorage() {
+  projectsList = getAllProjects();
+  console.log(projectsList)
   localStorage.setItem("projects", JSON.stringify(projectsList));
 }
 

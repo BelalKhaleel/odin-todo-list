@@ -1,49 +1,46 @@
 import Task from "./task-model";
 import {
   projectsList,
-  saveProjectsToLocalStorage,
+  // saveProjectsToLocalStorage,
 } from "../project/project-controller";
 import { taskId, updateTaskCard, displayTask, clearTaskCards } from "./task-view";
 import { displayProjectTasks } from "../project/project-view";
 
-const title = document.getElementById("task-title-input");
-const description = document.getElementById("task-description-input");
-const dueDate = document.getElementById("task-due-date-input");
-const priority = document.getElementById("task-priority-input");
-const project = document.getElementById("task-project");
-
-function getAllTasks() {
-  saveProjectsToLocalStorage();
-  return projectsList[0].tasksList;
-}
-
-function addTask() {
-  if (!title.value || !description.value || !dueDate.value) return;
-  const task = new Task(
-    title.value.trim(),
-    description.value.trim(),
-    dueDate.value,
-    priority.value,
-    project.options[project.selectedIndex].textContent
-  );
-  const index = projectsList.findIndex(
-    (p) => p.title === project.options[project.selectedIndex].textContent
-  );
-  // to add a task to a project other than the All Tasks array
-  if (index > 0) projectsList[index].tasksList.push(task);
-
-  const allTasks = getAllTasks();
-  const isTaskInAllTasks = allTasks.some(
-    (t) =>
-      t.title === task.title 
-    && t.description === task.description 
-    && t.dueDate === task.dueDate
-  );
-
-  if (!isTaskInAllTasks) {
-    allTasks.push(task);
+export default class TaskController {
+  static getAllTasks() {
+    const projects = JSON.parse(localStorage.getItem("projects"));
+    const allTasks = projects[0].tasksList;
+    return allTasks;
   }
-  return task;
+
+  static addTask(title, description, dueDate, priority, project) {
+    if (!title || !description || !dueDate) return;
+    const task = new Task(
+      title,
+      description,
+      dueDate,
+      priority,
+      project
+    );
+    // const index = projectsList.findIndex(
+    //   (p) => p.title === project
+    // );
+    // // to add a task to a project other than the 'All Tasks' array
+    // if (index > 0) projectsList[index].tasksList.push(task);
+
+    // const allTasks = TaskController.getAllTasks();
+    // const isTaskInAllTasks = allTasks.some(
+    //   (t) =>
+    //     t.title === task.title 
+    //   && t.description === task.description 
+    //   && t.dueDate === task.dueDate
+    // );
+
+    // if (!isTaskInAllTasks) {
+    //   allTasks.push(task);
+    // }
+    return task;
+  }
 }
 
 function editTask() {
@@ -91,7 +88,7 @@ function deleteTask(e) {
     const index = project.tasksList.findIndex((t) => t.id === id);
     project.tasksList.splice(index, 1);
   }
-  const allTasks = getAllTasks();
+  const allTasks = TaskController.getAllTasks();
   const index = allTasks.findIndex((t) => t.id === id);
   if (index > -1) allTasks.splice(index, 1);
   taskCard.remove();
@@ -100,9 +97,9 @@ function deleteTask(e) {
 
 function filterTasks(filterCriteria) {
   clearTaskCards();
-  getAllTasks()
+  TaskController.getAllTasks()
     .filter(filterCriteria)
     .forEach((task) => displayTask(task));
 }
 
-export { getAllTasks, addTask, editTask, deleteTask, filterTasks };
+export { editTask, deleteTask, filterTasks };

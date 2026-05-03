@@ -7,21 +7,20 @@ function displayProject(title) {
   if (title !== "All Tasks") {
     const project = document.createElement("button");
     project.classList.add("sidebar-nav-project");
-    const projectTitle = document.createElement("span");
-    projectTitle.classList.add("nav-item-title");
-    projectTitle.textContent = title;
+    project.textContent = title;
     const openFolderIcon = document.createElement("img");
     openFolderIcon.classList.add("nav-item-icon");
     openFolderIcon.src = openFolder;
     const trashIcon = document.createElement("img");
     trashIcon.classList.add("trash-nav-icon");
     trashIcon.src = trash;
-    project.append(openFolderIcon, projectTitle, trashIcon);
+    project.append(openFolderIcon, trashIcon);
     document.querySelector(".sidebar-nav-projects").appendChild(project);
   }
 }
 
 function loadProjects() {
+  if (!projectsList) return;
   projectsList.forEach((project) => displayProject(project.title));
 }
 

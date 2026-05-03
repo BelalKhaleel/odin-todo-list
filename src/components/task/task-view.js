@@ -1,6 +1,6 @@
 import { projectsList, saveProjectsToLocalStorage } from "../project/project-controller";
 import { displayProjectOptions } from "../project/project-view";
-import { getAllTasks } from "./task-controller";
+import TaskController from "./task-controller";
 
 const taskCards = document.querySelector(".task-cards");
 
@@ -163,7 +163,7 @@ function toggleCheckbox(e) {
       task.isComplete = isChecked;
     }
   }
-  task = getAllTasks().find((t) => t.id === id);
+  task = TaskController.getAllTasks().find((t) => t.id === id);
   if (task) {
     task.isComplete = isChecked;
   }
