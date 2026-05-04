@@ -1,8 +1,15 @@
-export default (title) => {
-  const tasksList = [];
+export default class Project {
+  constructor(title) {
+    this.title = title;
+    this.tasksList = [];
+  }
+}
 
-  return {
-    title,
-    tasksList,
-  };
-};
+// export default (title) => {
+//   const tasksList = [];
+
+//   return {
+//     title,
+//     tasksList,
+//   };
+// };

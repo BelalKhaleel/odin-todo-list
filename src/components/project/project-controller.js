@@ -3,8 +3,9 @@ import { displayProject } from "./project-view";
 // import { getAllTasks } from "../task/task-controller";
 import TaskController from "../task/task-controller";
 
-const allTasks = Project("All Tasks");
-let projectsList = JSON.parse(localStorage.getItem("projects")) || [allTasks];
+// const allTasks = new Project("All Tasks");
+let projectsList = JSON.parse(localStorage.getItem("projects"));
+
 saveProjectsToLocalStorage();
 
 const newProjectInput = document.querySelector(".new-project-input");
@@ -14,7 +15,7 @@ function getAllProjects() {
 }
 
 function addProject() {
-  const newProject = Project(newProjectInput.value.trim());
+  const newProject = new Project(newProjectInput.value.trim());
   if (projectsList.some((project) => project.title === newProject.title))
     return;
   projectsList.push(newProject);
@@ -56,7 +57,7 @@ function saveProjectsToLocalStorage() {
 
 export {
   addProject,
-  allTasks,
+  // allTasks,
   projectsList,
   newProjectInput,
   saveProjectsToLocalStorage,

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -42,7 +42,11 @@
                 <button class="new-project-btn">+</button>
               </li>
               <li>
-                <button class="sidebar-nav-item open-folder sidebar-nav-project">All Tasks</button>
+                <button
+                  class="sidebar-nav-item open-folder sidebar-nav-project"
+                >
+                  All Tasks
+                </button>
               </li>
             </ul>
           </section>
@@ -61,23 +65,48 @@
         <dialog>
           <form method="dialog">
             <label for="task-title-input">Task Name:</label>
-            <input type="text" id="task-title-input" placeholder="Enter task name" required>
+            <input
+              type="text"
+              id="task-title-input"
+              name="task-title"
+              placeholder="Enter task name"
+              required
+            />
             <label for="task-description-input">Description:</label>
-            <textarea id="task-description-input" placeholder="Add description or notes" rows="5" cols="40" required></textarea>
+            <textarea
+              id="task-description-input"
+              name="task-description"
+              placeholder="Add description or notes"
+              rows="5"
+              cols="40"
+              required
+            ></textarea>
             <label for="task-due-date-input">Due Date:</label>
-            <input type="date" id="task-due-date-input" required>
+            <input
+              type="date"
+              id="task-due-date-input"
+              name="task-due-date"
+              required
+            />
             <label for="task-priority-input">Priority:</label>
-            <select id="task-priority-input">
+            <select id="task-priority-input" name="task-priority">
               <option class="priority-option" value="low">Low</option>
-              <option class="priority-option" value="medium" selected>Medium</option>
+              <option class="priority-option" value="medium" selected>
+                Medium
+              </option>
               <option class="priority-option" value="high">High</option>
             </select>
             <label for="task-project">Select Project of the Task:</label>
-            <select id="task-project">
-            </select>
+            <select id="task-project" name="task-project"></select>
             <div class="form-btns">
-              <button type="submit" class="form-btn" id="form-task-btn"></button>
-              <button type="button" class="form-btn" id="cancel-task-btn">Cancel</button>
+              <button
+                type="submit"
+                class="form-btn"
+                id="form-task-btn"
+              ></button>
+              <button type="button" class="form-btn" id="cancel-task-btn">
+                Cancel
+              </button>
             </div>
           </form>
         </dialog>

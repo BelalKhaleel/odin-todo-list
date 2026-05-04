@@ -8,7 +8,7 @@ import {
 import {
   createProjectOption,
   displayProjectOptions,
-  loadProjects,
+  displayProjects,
   displayProjectTasks,
 } from "./components/project/project-view.js";
 import TaskController from "./components/task/task-controller.js";
@@ -24,6 +24,7 @@ import {
 } from "./components/task/task-view.js";
 import { format, isEqual, isAfter } from "date-fns";
 import "./style.css";
+import Project from "./components/project/project-model.js";
 
 const header = document.querySelector(".current-project");
 const sidebarAddTaskButton = document.querySelector(".add-task");
@@ -43,8 +44,8 @@ document.getElementById("task-due-date-input").setAttribute("min", today);
 sidebarAddTaskButton.addEventListener("click", () => {
   mode = "add";
   formTaskButton.textContent = "Add Task";
-  form.reset();
   modal.showModal();
+  form.reset();
   displayProjectOptions();
   console.log(projectsList);
   console.log(mode);
@@ -65,45 +66,43 @@ newProjectButton.addEventListener("click", () => {
   saveProjectsToLocalStorage();
 });
 
-formTaskButton.addEventListener("click", () => {
-  const title = document.getElementById("task-title-input").value.trim();
-  const description = document
-    .getElementById("task-description-input")
-    .value.trim();
-  const dueDate = document.getElementById("task-due-date-input").value;
-  const priority = document.getElementById("task-priority-input").value;
-  const projectIndex = document.getElementById("task-project").options.selectedIndex;
-  const project =
-    document.getElementById("task-project").options[projectIndex].textContent;
-  if (mode === "add") {
-    const task = TaskController.addTask(
-      title,
-      description,
-      dueDate,
-      priority,
-      project,
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+    const trimmedData = JSON.parse(
+      JSON.stringify(data, (key, value) =>
+        typeof value === "string" ? value.trim() : value,
+      ),
     );
-    const index = projectsList.findIndex((p) => p.title === project);
-    // to add a task to a project other than the 'All Tasks' array
-    if (index > 0) projectsList[index].tasksList.push(task);
-
-    const allTasks = TaskController.getAllTasks();
-    const isTaskInAllTasks = allTasks.some(
-      (t) =>
-        t.title === task.title &&
-        t.description === task.description &&
-        t.dueDate === task.dueDate,
-    );
-
-    if (!isTaskInAllTasks) {
-      projectsList[0].tasksList.push(task);
+    console.log("Full Form Data:", trimmedData);
+    if (mode === "add") {
+      const task = TaskController.addTask(trimmedData);
+      console.log(task)
     }
-    displayTask(task);
-  } else if (mode === "update") {
-    editTask();
-  }
-  // saveProjectsToLocalStorage();
-})
+});
+
+//     const index = projectsList.findIndex((p) => p.title === project);
+//     // to add a task to a project other than the 'All Tasks' array
+//     if (index > 0) projectsList[index].tasksList.push(task);
+
+//     const allTasks = TaskController.getAllTasks();
+//     const isTaskInAllTasks = allTasks.some(
+//       (t) =>
+//         t.title === task.title &&
+//         t.description === task.description &&
+//         t.dueDate === task.dueDate,
+//     );
+
+//     if (!isTaskInAllTasks) {
+//       projectsList[0].tasksList.push(task);
+//     }
+//     displayTask(task);
+//   } else if (mode === "update") {
+//     editTask();
+//   }
+//   // saveProjectsToLocalStorage();
+// })
 
 formCancelButton.addEventListener("click", () => modal.close());
 
@@ -147,7 +146,11 @@ newProjectInput.addEventListener("keydown", (e) => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  loadProjects();
+  const projects = JSON.parse(localStorage.getItem("projects"));
+  if (!projects) {
+    localStorage.setItem("projects", JSON.stringify([new Project("All Tasks")]));
+  }
+  displayProjects(projects);
   const allTasks = TaskController.getAllTasks()
   if (!allTasks) return;
   allTasks.forEach((task) =>

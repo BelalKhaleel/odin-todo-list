@@ -19,9 +19,9 @@ function displayProject(title) {
   }
 }
 
-function loadProjects() {
-  if (!projectsList) return;
-  projectsList.forEach((project) => displayProject(project.title));
+function displayProjects(projects) {
+  if (!projects) return;
+  projects.forEach((project) => displayProject(project.title));
 }
 
 const projectOptions = document.querySelector("#task-project");
@@ -39,6 +39,7 @@ function createProjectOption(project) {
 
 function displayProjectOptions() {
   document.querySelectorAll(".project-option").forEach((option) => option.remove());
+  if(!projectsList) return;
   projectsList.forEach((project) => createProjectOption(project));
 }
 
@@ -53,7 +54,7 @@ function displayProjectTasks(e) {
 
 export {
   displayProject,
-  loadProjects,
+  displayProjects,
   projectOptions,
   createProjectOption,
   displayProjectOptions,

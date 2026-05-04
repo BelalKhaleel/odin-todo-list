@@ -1,5 +1,5 @@
 export default class Task {
-  static #currentId = parseInt(localStorage.getItem("taskId")) || 0;
+  static #currentId = parseInt(localStorage.getItem("taskId")) || 1;
   #id;
 
   constructor(title, description, dueDate, priority, project) {

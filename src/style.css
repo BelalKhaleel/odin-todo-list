@@ -122,6 +122,10 @@ ul li {
   font-size: 2rem;
 }
 
+.new-project-btn:hover {
+  background-color: var(--accent-color);
+}
+
 main {
   padding: 3em;
   background-color: var(--primary-color);

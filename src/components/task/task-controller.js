@@ -13,15 +13,14 @@ export default class TaskController {
     return allTasks;
   }
 
-  static addTask(title, description, dueDate, priority, project) {
+  static addTask(taskDetails) {
+    const title = taskDetails["task-title"].trim();
+    const description = taskDetails["task-description"].trim();
+    const dueDate = taskDetails["task-due-date"].trim();
+    const priority = taskDetails["task-priority"].trim();
+    const project = taskDetails["task-project"].trim();
     if (!title || !description || !dueDate) return;
-    const task = new Task(
-      title,
-      description,
-      dueDate,
-      priority,
-      project
-    );
+    return new Task(title, description, dueDate, priority, project);
     // const index = projectsList.findIndex(
     //   (p) => p.title === project
     // );
@@ -39,7 +38,6 @@ export default class TaskController {
     // if (!isTaskInAllTasks) {
     //   allTasks.push(task);
     // }
-    return task;
   }
 }
 
