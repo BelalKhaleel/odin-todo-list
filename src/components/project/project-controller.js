@@ -6,21 +6,40 @@ import TaskController from "../task/task-controller";
 // const allTasks = new Project("All Tasks");
 let projectsList = JSON.parse(localStorage.getItem("projects"));
 
-saveProjectsToLocalStorage();
+// saveProjectsToLocalStorage();
 
-const newProjectInput = document.querySelector(".new-project-input");
-
-function getAllProjects() {
-  return JSON.parse(localStorage.getItem("projects"));
+// const newProjectInput = document.querySelector(".new-project-input");
+export default class ProjectController {
+  static getAllProjects() {
+    const projects = JSON.parse(localStorage.getItem("projects"));
+    if (!projects) return;
+    return projects;
+  }
+  static getProject(title, projects) {
+    if (typeof title !== "string") throw new Error("Project title must be a string.");
+    const project = projects.find(project => project.title === title);
+    if (!project) return;
+    return project;
+  }
+  static createProject(title) {
+    if (typeof title !== "string") throw new Error("Project title must be a string.");
+    title = title.trim();
+    return new Project(title);
+  }
+  static deleteProject(title, projects) {
+    // const project = ProjectController.getProject(title, projects);
+    const projectIndex = projects.findIndex(project => project.title === title);
+    projects.slice(projectIndex, 1);
+  }
 }
 
-function addProject() {
-  const newProject = new Project(newProjectInput.value.trim());
-  if (projectsList.some((project) => project.title === newProject.title))
-    return;
-  projectsList.push(newProject);
-  displayProject(newProject.title);
-}
+// function addProject() {
+//   const newProject = new Project(newProjectInput.value.trim());
+//   if (projectsList.some((project) => project.title === newProject.title))
+//     return;
+//   projectsList.push(newProject);
+//   displayProject(newProject.title);
+// }
 
 function deleteProject(e) {
   const project = e.target.closest(".sidebar-nav-project");
@@ -29,7 +48,7 @@ function deleteProject(e) {
     (project) => project.title === projectTitle
   );
   if (index > -1) {
-    const allTasks = TaskController.getAllTasks;
+    const allTasks = TaskController.getAllTasks();
 
     projectsList[index].tasksList.forEach((task) => {
       const taskIndexInAllTasks = allTasks.findIndex((t) => t.id === task.id);
@@ -49,17 +68,15 @@ function deleteProject(e) {
   project.remove();
 }
 
-function saveProjectsToLocalStorage() {
-  projectsList = getAllProjects();
-  console.log(projectsList)
-  localStorage.setItem("projects", JSON.stringify(projectsList));
-}
+// function saveProjectsToLocalStorage() {
+//   projectsList = ProjectController.getAllProjects();
+//   console.log(projectsList)
+//   localStorage.setItem("projects", JSON.stringify(projectsList));
+// }
 
 export {
-  addProject,
+  // addProject,
   // allTasks,
   projectsList,
-  newProjectInput,
-  saveProjectsToLocalStorage,
   deleteProject,
 };

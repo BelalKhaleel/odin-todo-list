@@ -3,7 +3,8 @@ import {
   projectsList,
   // saveProjectsToLocalStorage,
 } from "../project/project-controller";
-import { taskId, updateTaskCard, displayTask, clearTaskCards } from "./task-view";
+import { taskId, updateTaskCard } from "./task-view";
+import TaskView from "./task-view";
 import { displayProjectTasks } from "../project/project-view";
 
 export default class TaskController {
@@ -93,10 +94,10 @@ function deleteTask(e) {
 }
 
 function filterTasks(filterCriteria) {
-  clearTaskCards();
+  TaskView.clearTaskCards();
   TaskController.getAllTasks()
     .filter(filterCriteria)
-    .forEach((task) => displayTask(task));
+    .forEach((task) => TaskView.displayTask(task));
 }
 
 export { editTask, deleteTask, filterTasks };

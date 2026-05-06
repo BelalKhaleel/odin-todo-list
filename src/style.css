@@ -53,6 +53,8 @@ body {
 
 ul li {
   list-style: none;
+  display: flex;
+  gap: 5px;
 }
 
 .sidebar-nav-item, .sidebar-nav-project {
@@ -100,10 +102,6 @@ ul li {
 
 .open-folder::before {
   background-image: url(./components/icons/folder-open-solid.svg);
-}
-
-.trash-nav-icon {
-  margin-left: 1em;
 }
 
 .add-project-container {
