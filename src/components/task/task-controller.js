@@ -8,12 +8,11 @@ import { displayProjectTasks } from "../project/project-view";
 
 export default class TaskController {
   static getAllTasks() {
-    const projects = JSON.parse(localStorage.getItem("projects"));
-    const allTasks = projects[0].tasksList;
+    const allTasks = JSON.parse(localStorage.getItem("all tasks"));
     return allTasks;
   }
 
-  static addTask(taskDetails) {
+  static createTask(taskDetails) {
     const title = taskDetails["task-title"].trim();
     const description = taskDetails["task-description"].trim();
     const dueDate = taskDetails["task-due-date"].trim();
