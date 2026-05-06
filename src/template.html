@@ -43,7 +43,7 @@
               </li>
               <li>
                 <button
-                  class="sidebar-nav-item open-folder sidebar-nav-project"
+                  class="sidebar-nav-item open-folder all-tasks"
                 >
                   All Tasks
                 </button>
@@ -97,7 +97,9 @@
               <option class="priority-option" value="high">High</option>
             </select>
             <label for="task-project">Select Project of the Task:</label>
-            <select id="task-project" name="task-project"></select>
+            <select id="task-project" name="task-project">
+              <option class="all-tasks-option" value="all-tasks" selected>All Tasks</option>
+            </select>
             <div class="form-btns">
               <button
                 type="submit"
@@ -105,7 +107,7 @@
                 id="form-task-btn"
               ></button>
               <button type="button" class="form-btn" id="cancel-task-btn">
-                Cancel
+                Close
               </button>
             </div>
           </form>
