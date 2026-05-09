@@ -92,6 +92,11 @@ form.addEventListener("submit", (e) => {
       console.log(allTasks);
       localStorage.setItem("all tasks", JSON.stringify(allTasks));
       TaskView.displayAllTasks(allTasks);
+      if (task.project === "all-projects") return;
+      const projects = ProjectController.getAllProjects();
+      const projectIndex = projects.findIndex(project => project.title === task.project);
+      projects[projectIndex].tasksList.push(task);
+      localStorage.setItem('projects', JSON.stringify(projects));
     }
     form.reset();
 });
