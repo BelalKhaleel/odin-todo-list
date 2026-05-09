@@ -1,5 +1,4 @@
 import {
-  // addProject,
   deleteProject,
   projectsList,
   // saveProjectsToLocalStorage,
@@ -101,38 +100,14 @@ form.addEventListener("submit", (e) => {
     form.reset();
 });
 
-//     const index = projectsList.findIndex((p) => p.title === project);
-//     // to add a task to a project other than the 'All Tasks' array
-//     if (index > 0) projectsList[index].tasksList.push(task);
-
-//     const allTasks = TaskController.getAllTasks();
-//     const isTaskInAllTasks = allTasks.some(
-//       (t) =>
-//         t.title === task.title &&
-//         t.description === task.description &&
-//         t.dueDate === task.dueDate,
-//     );
-
-//     if (!isTaskInAllTasks) {
-//       projectsList[0].tasksList.push(task);
-//     }
-//     displayTask(task);
-//   } else if (mode === "update") {
-//     editTask();
-//   }
-//   // saveProjectsToLocalStorage();
-// })
-
 formCloseButton.addEventListener("click", () => modal.close());
 
 document.addEventListener("click", (e) => {
   const button = e.target;
 
   if (button.closest(".sidebar-nav-project")) {
-    displayProjectTasks(e);
-    header.textContent =
-      button.closest(".sidebar-nav-project").querySelector(".nav-item-title")
-        .textContent ?? "All Tasks";
+    const projectTitle = button.textContent;
+    ProjectView.displayProjectTasks(projectTitle);
   }
   if (button.closest(".trash-nav-icon")) {
     deleteProject(e);

@@ -1,6 +1,6 @@
 import openFolder from "../icons/folder-open-solid.svg";
 import trash from "../icons/trash-solid.svg";
-import { projectsList } from "./project-controller";
+import ProjectController, { projectsList } from "./project-controller";
 import TaskView from "../task/task-view";
 
 export default class ProjectView {
@@ -30,6 +30,13 @@ export default class ProjectView {
   static displayProjects(projects) {
     if (!projects) return;
     projects.forEach((project) => this.displayProject(project));
+  }
+  static displayProjectTasks(title) {
+    const projects = ProjectController.getAllProjects();
+    const index = projects.findIndex(project => project.title === title);
+    TaskView.clearTaskCards();
+    const tasks = JSON.parse(localStorage.getItem("projects"))[index].tasksList;
+    tasks.forEach((task) => TaskView.displayTask(task));
   }
 }
 
@@ -71,14 +78,14 @@ function displayProjectOptions() {
   projectsList.forEach((project) => createProjectOption(project));
 }
 
-function displayProjectTasks(e) {
-  const index = projectsList.findIndex(
-    (project) => project.title === e.target.closest(".sidebar-nav-project").querySelector(".nav-item-title").textContent
-  );
-  TaskView.clearTaskCards();
-  const tasks = JSON.parse(localStorage.getItem("projects"))[index].tasksList;
-  tasks.forEach((task) => TaskView.displayTask(task));
-}
+// function displayProjectTasks(e) {
+//   const index = projectsList.findIndex(
+//     (project) => project.title === e.target.closest(".sidebar-nav-project").querySelector(".nav-item-title").textContent
+//   );
+//   TaskView.clearTaskCards();
+//   const tasks = JSON.parse(localStorage.getItem("projects"))[index].tasksList;
+//   tasks.forEach((task) => TaskView.displayTask(task));
+// }
 
 export {
   // displayProject,
@@ -86,5 +93,5 @@ export {
   projectOptions,
   createProjectOption,
   displayProjectOptions,
-  displayProjectTasks,
+  // displayProjectTasks,
 };
