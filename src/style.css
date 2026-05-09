@@ -163,7 +163,7 @@ main {
   background-color: #04ff04;
 }
 
-.task-cards {
+.tasks-container {
   display: flex;
   flex-direction: column;
   gap: 1.5em;

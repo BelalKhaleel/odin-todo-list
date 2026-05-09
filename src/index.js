@@ -95,6 +95,7 @@ form.addEventListener("submit", (e) => {
       localStorage.setItem('projects', JSON.stringify(projects));
     }
     form.reset();
+    modal.close();
 });
 
 formCloseButton.addEventListener("click", () => modal.close());

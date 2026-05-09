@@ -1,7 +1,7 @@
 import TaskController from "./task-controller";
 import Task from "./task-model";
 
-const taskCards = document.querySelector(".task-cards");
+const taskCards = document.querySelector(".tasks-container");
 
 export default class TaskView {
   static displayTask(task) {
