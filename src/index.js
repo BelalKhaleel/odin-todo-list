@@ -4,27 +4,21 @@ import {
   // saveProjectsToLocalStorage,
 } from "./components/project/project-controller.js";
 import ProjectController from "./components/project/project-controller.js";
-import ProjectView, {
-  createProjectOption,
-  displayProjectOptions,
-  displayProjects,
-  displayProjectTasks,
-} from "./components/project/project-view.js";
+import ProjectView from "./components/project/project-view.js";
 import TaskController from "./components/task/task-controller.js";
 import {
-  deleteTask,
   editTask,
   filterTasks,
 } from "./components/task/task-controller.js";
 import TaskView, {
-  loadTaskValues,
+  // loadTaskValues,
   toggleCheckbox,
 } from "./components/task/task-view.js";
 import { format, isEqual, isAfter } from "date-fns";
 import "./style.css";
 import Project from "./components/project/project-model.js";
 
-const header = document.querySelector(".current-project");
+const currentProject = document.querySelector(".current-project");
 const sidebarAddTaskButton = document.querySelector(".add-task");
 const todayTasks = document.querySelector(".today");
 const upcomingTasks = document.querySelector(".upcoming");
@@ -34,7 +28,8 @@ const newProjectInput = document.querySelector(".new-project-input");
 const newProjectButton = document.querySelector(".new-project-btn");
 const modal = document.querySelector("dialog");
 const form = document.querySelector("form");
-const allTasksProject = document.querySelector(".all-tasks-option");
+const allTasks = document.querySelector(".all-tasks");
+const projectOptions = document.querySelector("#task-project");
 const formTaskButton = document.getElementById("form-task-btn");
 const formCloseButton = document.querySelector("#cancel-task-btn");
 const today = format(new Date(), "yyyy-MM-dd");
@@ -46,8 +41,8 @@ sidebarAddTaskButton.addEventListener("click", () => {
   formTaskButton.textContent = "Add Task";
   modal.showModal();
   form.reset();
-  displayProjectOptions();
-  console.log(projectsList);
+  const options = document.querySelectorAll(".project-option");
+  ProjectView.displayProjectOptions(options);
   console.log(mode);
 });
 
@@ -70,6 +65,8 @@ newProjectButton.addEventListener("click", () => {
   localStorage.setItem("projects", JSON.stringify(projects));
   newProjectInput.value = "";
   ProjectView.displayProject(project);
+  ProjectController.getAllProjects().forEach((project) => ProjectView.createProjectOption(project));
+
   // saveProjectsToLocalStorage();
 });
 
@@ -85,13 +82,13 @@ form.addEventListener("submit", (e) => {
     // console.log("Full Form Data:", trimmedData);
     if (mode === "add") {
       const task = TaskController.createTask(trimmedData);
-      console.log(task)
+      console.log(task.id)
       const allTasks = TaskController.getAllTasks();
       allTasks.push(task);
-      console.log(allTasks);
+      console.log(allTasks.find(task => task.id === 11));
       localStorage.setItem("all tasks", JSON.stringify(allTasks));
-      TaskView.displayAllTasks(allTasks);
-      if (task.project === "all-projects") return;
+      TaskView.displayTasks(allTasks);
+      if (task.project === "all-tasks") return;
       const projects = ProjectController.getAllProjects();
       const projectIndex = projects.findIndex(project => project.title === task.project);
       projects[projectIndex].tasksList.push(task);
@@ -102,27 +99,35 @@ form.addEventListener("submit", (e) => {
 
 formCloseButton.addEventListener("click", () => modal.close());
 
+allTasks.addEventListener("click", () => {
+  currentProject.textContent = allTasks.textContent;
+  const tasks = TaskController.getAllTasks();
+  TaskView.displayTasks(tasks);
+})
+
 document.addEventListener("click", (e) => {
   const button = e.target;
 
   if (button.closest(".sidebar-nav-project")) {
     const projectTitle = button.textContent;
+    currentProject.textContent = button.textContent;
     ProjectView.displayProjectTasks(projectTitle);
   }
   if (button.closest(".trash-nav-icon")) {
     deleteProject(e);
     // saveProjectsToLocalStorage();
-    TaskController.getAllTasks().forEach((task) => TaskView.displayTask(task));
+    const tasks = TaskController.getAllTasks();
+    TaskView.displayTasks(tasks);
   }
   if (button.closest(".edit-btn")) {
     mode = "update";
     formTaskButton.textContent = "Edit Task";
     modal.showModal();
     console.log(mode);
-    loadTaskValues(e);
+    // loadTaskValues(e);
   }
   if (button.closest(".delete-btn")) {
-    deleteTask(e);
+    TaskController.deleteTask(e);
   }
   if (button.type === "checkbox") {
     toggleCheckbox(e);
@@ -140,6 +145,7 @@ newProjectInput.addEventListener("keydown", (e) => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
+  currentProject.textContent = document.querySelector(".all-tasks").textContent;
   let allTasks = JSON.parse(localStorage.getItem("all tasks"));
   if (!allTasks) {
     localStorage.setItem("all tasks", JSON.stringify([]));
@@ -152,6 +158,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // displayProjects(projects);
   // const allTasks = TaskController.getAllTasks()
   // if (!allTasks) return;
-  TaskView.displayAllTasks(allTasks);
+  TaskView.displayTasks(allTasks);
   ProjectView.displayProjects(projects);
 });

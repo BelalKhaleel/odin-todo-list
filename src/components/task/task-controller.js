@@ -12,7 +12,6 @@ export default class TaskController {
     const allTasks = JSON.parse(localStorage.getItem("all tasks"));
     return allTasks;
   }
-
   static createTask(taskDetails) {
     const title = taskDetails["task-title"].trim();
     const description = taskDetails["task-description"].trim();
@@ -21,23 +20,33 @@ export default class TaskController {
     const project = taskDetails["task-project"].trim();
     if (!title || !description || !dueDate) return;
     return new Task(title, description, dueDate, priority, project);
-    // const index = projectsList.findIndex(
-    //   (p) => p.title === project
-    // );
-    // // to add a task to a project other than the 'All Tasks' array
-    // if (index > 0) projectsList[index].tasksList.push(task);
 
     // const allTasks = TaskController.getAllTasks();
     // const isTaskInAllTasks = allTasks.some(
     //   (t) =>
-    //     t.title === task.title 
-    //   && t.description === task.description 
+    //     t.title === task.title
+    //   && t.description === task.description
     //   && t.dueDate === task.dueDate
     // );
 
     // if (!isTaskInAllTasks) {
     //   allTasks.push(task);
     // }
+  }
+  static deleteTask(e) {
+    const taskCard = e.target.closest(".task-card");
+    const projectName = taskCard.querySelector(".project-name").textContent;
+    const id = parseInt(taskCard.dataset.taskId);
+    if (projectName !== "All Tasks") {
+      const project = projectsList.find((p) => p.title === projectName);
+      const index = project.tasksList.findIndex((t) => t.id === id);
+      project.tasksList.splice(index, 1);
+    }
+    const allTasks = TaskController.getAllTasks();
+    const index = allTasks.findIndex((t) => t.id === id);
+    if (index > -1) allTasks.splice(index, 1);
+    taskCard.remove();
+    // saveProjectsToLocalStorage();
   }
 }
 
@@ -77,21 +86,21 @@ function moveTaskToNewProject(oldProject, task, newProjectName) {
   }
 }
 
-function deleteTask(e) {
-  const taskCard = e.target.closest(".task-card");
-  const projectName = taskCard.querySelector(".project-name").textContent;
-  const id = parseInt(taskCard.dataset.taskId);
-  if (projectName !== "All Tasks") {
-    const project = projectsList.find((p) => p.title === projectName);
-    const index = project.tasksList.findIndex((t) => t.id === id);
-    project.tasksList.splice(index, 1);
-  }
-  const allTasks = TaskController.getAllTasks();
-  const index = allTasks.findIndex((t) => t.id === id);
-  if (index > -1) allTasks.splice(index, 1);
-  taskCard.remove();
-  saveProjectsToLocalStorage();
-}
+// function deleteTask(e) {
+//   const taskCard = e.target.closest(".task-card");
+//   const projectName = taskCard.querySelector(".project-name").textContent;
+//   const id = parseInt(taskCard.dataset.taskId);
+//   if (projectName !== "All Tasks") {
+//     const project = projectsList.find((p) => p.title === projectName);
+//     const index = project.tasksList.findIndex((t) => t.id === id);
+//     project.tasksList.splice(index, 1);
+//   }
+//   const allTasks = TaskController.getAllTasks();
+//   const index = allTasks.findIndex((t) => t.id === id);
+//   if (index > -1) allTasks.splice(index, 1);
+//   taskCard.remove();
+//   saveProjectsToLocalStorage();
+// }
 
 function filterTasks(filterCriteria) {
   TaskView.clearTaskCards();
@@ -100,4 +109,4 @@ function filterTasks(filterCriteria) {
     .forEach((task) => TaskView.displayTask(task));
 }
 
-export { editTask, deleteTask, filterTasks };
+export { editTask, filterTasks };
