@@ -34,6 +34,10 @@ const projectOptions = document.querySelector("#task-project");
 const formTaskButton = document.getElementById("form-task-btn");
 const formCloseButton = document.querySelector("#cancel-task-btn");
 const today = format(new Date(), "yyyy-MM-dd");
+const tasksBelongToProject = (project, tasks) => {
+  if (tasks.length === 0) return;
+  return tasks.every(task => task.project === project.title);
+}
 let mode = "add";
 let id = 0;
 document.getElementById("task-due-date-input").setAttribute("min", today);
@@ -49,11 +53,8 @@ sidebarAddTaskButton.addEventListener("click", () => {
 });
 
 todayTasks.addEventListener("click", () => filterTasks((task) => isEqual(task.dueDate, today)));
-
 upcomingTasks.addEventListener("click", () => filterTasks((task) => isAfter(task.dueDate, today)));
-
 importantTasks.addEventListener("click", () => filterTasks((task) => task.priority === "high"));
-
 completedTasks.addEventListener("click", () => filterTasks((task) => task.isComplete === true));
 
 newProjectButton.addEventListener("click", () => {
@@ -103,13 +104,15 @@ form.addEventListener("submit", (e) => {
         if (newProject) newProject.tasksList.push(task);
       }
       TaskController.updateTask(task, data);
+      const projectsConsistent = projects.every(project => tasksBelongToProject(project, project.tasksList));
+      if (!projectsConsistent) throw new Error("Tasks don't belong to certain projects!");
       localStorage.setItem("projects", JSON.stringify(projects));
       localStorage.setItem("all tasks", JSON.stringify(allTasks));
-      // console.log(task)
-      // console.log(allTasks);
     }
     form.reset();
     modal.close();
+    const tasks = TaskController.getAllTasks();
+    TaskView.displayTasks(tasks);
 });
 
 formCloseButton.addEventListener("click", () => modal.close());
