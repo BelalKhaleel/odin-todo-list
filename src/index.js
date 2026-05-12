@@ -17,6 +17,7 @@ import TaskView, {
 import { format, isEqual, isAfter } from "date-fns";
 import "./style.css";
 import Project from "./components/project/project-model.js";
+import { trimData } from "./middleware.js";
 
 const currentProject = document.querySelector(".current-project");
 const sidebarAddTaskButton = document.querySelector(".add-task");
@@ -34,6 +35,7 @@ const formTaskButton = document.getElementById("form-task-btn");
 const formCloseButton = document.querySelector("#cancel-task-btn");
 const today = format(new Date(), "yyyy-MM-dd");
 let mode = "add";
+let id = 0;
 document.getElementById("task-due-date-input").setAttribute("min", today);
 
 sidebarAddTaskButton.addEventListener("click", () => {
@@ -58,7 +60,7 @@ newProjectButton.addEventListener("click", () => {
   if (!newProjectInput.value) return;
   const projectTitle = newProjectInput.value.trim();
   const projects = ProjectController.getAllProjects();
-  const projectAlreadyExists = ProjectController.getProject(projectTitle, projects);
+  const projectAlreadyExists = ProjectController.getProjectByTitle(projectTitle, projects);
   if (projectAlreadyExists) return;
   const project = ProjectController.createProject(projectTitle);
   projects.push(project);
@@ -74,18 +76,11 @@ form.addEventListener("submit", (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
-    const trimmedData = JSON.parse(
-      JSON.stringify(data, (key, value) =>
-        typeof value === "string" ? value.trim() : value,
-      ),
-    );
-    // console.log("Full Form Data:", trimmedData);
+    trimData(data);
+    const allTasks = TaskController.getAllTasks();
     if (mode === "add") {
-      const task = TaskController.createTask(trimmedData);
-      console.log(task.id)
-      const allTasks = TaskController.getAllTasks();
+      const task = TaskController.createTask(data);
       allTasks.push(task);
-      console.log(allTasks.find(task => task.id === 11));
       localStorage.setItem("all tasks", JSON.stringify(allTasks));
       TaskView.displayTasks(allTasks);
       if (task.project === "all-tasks") return;
@@ -93,6 +88,25 @@ form.addEventListener("submit", (e) => {
       const projectIndex = projects.findIndex(project => project.title === task.project);
       projects[projectIndex].tasksList.push(task);
       localStorage.setItem('projects', JSON.stringify(projects));
+    } else if (mode === "update") {
+      const task = TaskController.getTaskById(id, allTasks);
+      // if project changes remove it from previous project into the new one (unless the previous project was 'all-tasks')
+      const projects = ProjectController.getAllProjects();
+      if (task.project !== data["task-project"]) {
+        const newProjectTitle = data["task-project"];
+        const project = ProjectController.getProjectByTitle(task.project, projects);
+        if (project && project.title !== "all-tasks") {
+          const taskIndex = project.tasksList.findIndex(task => task.id === id);
+          project.tasksList.splice(taskIndex, 1);
+        }
+        const newProject = ProjectController.getProjectByTitle(newProjectTitle, projects);
+        if (newProject) newProject.tasksList.push(task);
+      }
+      TaskController.updateTask(task, data);
+      localStorage.setItem("projects", JSON.stringify(projects));
+      localStorage.setItem("all tasks", JSON.stringify(allTasks));
+      // console.log(task)
+      // console.log(allTasks);
     }
     form.reset();
     modal.close();
@@ -122,10 +136,24 @@ document.addEventListener("click", (e) => {
   }
   if (button.closest(".edit-btn")) {
     mode = "update";
+    id = parseInt(button.closest(".task-card").dataset.taskId);
     formTaskButton.textContent = "Edit Task";
     modal.showModal();
     console.log(mode);
-    // loadTaskValues(e);
+    const projectOptions = document.querySelectorAll(".project-option");
+    ProjectView.displayProjectOptions(projectOptions);
+    const allTasks = TaskController.getAllTasks();
+    const task = TaskController.getTaskById(id, allTasks);
+    const title = document.getElementById("task-title-input");
+    const description = document.getElementById("task-description-input");
+    const dueDate = document.getElementById("task-due-date-input");
+    const priority = document.getElementById("task-priority-input");
+    const project = document.getElementById("task-project");
+    title.value = task.title;
+    description.value = task.description;
+    dueDate.value = task.dueDate;
+    priority.value = task.priority;
+    project.value = task.project;
   }
   if (button.closest(".delete-btn")) {
     TaskController.deleteTask(e);

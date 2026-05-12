@@ -15,8 +15,9 @@ export default class ProjectController {
     if (!projects) return;
     return projects;
   }
-  static getProject(title, projects) {
+  static getProjectByTitle(title, projects) {
     if (typeof title !== "string") throw new Error("Project title must be a string.");
+    if (!Array.isArray(projects)) throw new Error("Projects must be an arrary.");
     const project = projects.find(project => project.title === title);
     if (!project) return;
     return project;
@@ -27,7 +28,7 @@ export default class ProjectController {
     return new Project(title);
   }
   static deleteProject(title, projects) {
-    // const project = ProjectController.getProject(title, projects);
+    // const project = ProjectController.getProjectByTitle(title, projects);
     const projectIndex = projects.findIndex(project => project.title === title);
     projects.slice(projectIndex, 1);
   }

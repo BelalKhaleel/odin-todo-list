@@ -105,33 +105,33 @@ export default class TaskView {
 
 let taskId;
 
-function loadTaskValues(e) {
-  const taskCard = e.target.closest(".task-card");
-  const projectName = taskCard.querySelector(".project-name").textContent;
-  const id = parseInt(taskCard.dataset.taskId);
-  let project;
-  let index;
-  if (projectName !== "All Tasks") {
-    project = projectsList.find((p) => p.title === projectName);
-    index = project.tasksList.findIndex((t) => t.id === id);
-  } else {
-    project = projectsList[0];
-    index = project.tasksList.findIndex((t) => t.id === id);
-  }
-  const task = project.tasksList[index];
-  const title = document.getElementById("task-title-input");
-  const description = document.getElementById("task-description-input");
-  const dueDate = document.getElementById("task-due-date-input");
-  const priority = document.getElementById("task-priority-input");
-  const taskProject = document.getElementById("task-project");
-  title.value = task.title;
-  description.value = task.description;
-  dueDate.value = task.dueDate;
-  priority.value = task.priority;
-  // displayProjectOptions();
-  taskProject.value = task.project.toLowerCase().replace(/\s+/g, "-");
-  taskId = task.id;
-}
+// function loadTaskValues(e) {
+//   const taskCard = e.target.closest(".task-card");
+//   const projectName = taskCard.querySelector(".project-name").textContent;
+//   const id = parseInt(taskCard.dataset.taskId);
+//   let project;
+//   let index;
+//   if (projectName !== "All Tasks") {
+//     project = projectsList.find((p) => p.title === projectName);
+//     index = project.tasksList.findIndex((t) => t.id === id);
+//   } else {
+//     project = projectsList[0];
+//     index = project.tasksList.findIndex((t) => t.id === id);
+//   }
+//   const task = project.tasksList[index];
+//   const title = document.getElementById("task-title-input");
+//   const description = document.getElementById("task-description-input");
+//   const dueDate = document.getElementById("task-due-date-input");
+//   const priority = document.getElementById("task-priority-input");
+//   const taskProject = document.getElementById("task-project");
+//   title.value = task.title;
+//   description.value = task.description;
+//   dueDate.value = task.dueDate;
+//   priority.value = task.priority;
+//   // displayProjectOptions();
+//   taskProject.value = task.project.toLowerCase().replace(/\s+/g, "-");
+//   taskId = task.id;
+// }
 
 function updateTaskCard(task) {
   const taskCard = document.querySelector(
@@ -193,4 +193,4 @@ function toggleCheckbox(e) {
   saveProjectsToLocalStorage();
 }
 
-export { loadTaskValues, updateTaskCard, toggleCheckbox, taskId };
+export { updateTaskCard, toggleCheckbox, taskId };
