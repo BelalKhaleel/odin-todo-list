@@ -33,10 +33,6 @@ const projectOptions = document.querySelector("#task-project");
 const formTaskButton = document.getElementById("form-task-btn");
 const formCloseButton = document.querySelector("#cancel-task-btn");
 const today = format(new Date(), "yyyy-MM-dd");
-// const tasksBelongToProject = (project, tasks) => {
-//   if (tasks.length === 0) return true;
-//   return tasks.every(task => task.project === project.title);
-// }
 let mode = "add";
 let id = 0;
 document.getElementById("task-due-date-input").setAttribute("min", today);
@@ -145,16 +141,7 @@ document.addEventListener("click", (e) => {
     ProjectView.displayProjectOptions(projectOptions);
     const allTasks = TaskController.getAllTasks();
     const task = TaskController.getTaskById(id, allTasks);
-    const title = document.getElementById("task-title-input");
-    const description = document.getElementById("task-description-input");
-    const dueDate = document.getElementById("task-due-date-input");
-    const priority = document.getElementById("task-priority-input");
-    const project = document.getElementById("task-project");
-    title.value = task.title;
-    description.value = task.description;
-    dueDate.value = task.dueDate;
-    priority.value = task.priority;
-    project.value = task.project;
+    TaskView.displayCurrentTaskDetails(task);
   }
   if (button.closest(".delete-btn")) {
     TaskController.deleteTask(e);

@@ -94,6 +94,18 @@ export default class TaskView {
     this.clearTaskCards();
     allTasks.forEach((task) => this.displayTask(task));
   }
+  static displayCurrentTaskDetails(task) {
+    const title = document.getElementById("task-title-input");
+    const description = document.getElementById("task-description-input");
+    const dueDate = document.getElementById("task-due-date-input");
+    const priority = document.getElementById("task-priority-input");
+    const project = document.getElementById("task-project");
+    title.value = task.title;
+    description.value = task.description;
+    dueDate.value = task.dueDate;
+    priority.value = task.priority;
+    project.value = task.project;
+  }
   static removeTaskCard() {
 
   }
