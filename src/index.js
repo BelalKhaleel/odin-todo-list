@@ -1,19 +1,10 @@
-// import {
-//   deleteProject,
-//   projectsList,
-//   // saveProjectsToLocalStorage,
-// } from "./components/project/project-controller.js";
 import ProjectController from "./components/project/project-controller.js";
 import ProjectView from "./components/project/project-view.js";
 import TaskController from "./components/task/task-controller.js";
-import TaskView, {
-  // loadTaskValues,
-  toggleCheckbox,
-} from "./components/task/task-view.js";
+import TaskView from "./components/task/task-view.js";
+import { trimData } from "./middleware.js";
 import { format, isEqual, isAfter } from "date-fns";
 import "./style.css";
-import Project from "./components/project/project-model.js";
-import { trimData } from "./middleware.js";
 
 const currentProject = document.querySelector(".current-project");
 const sidebarAddTaskButton = document.querySelector(".add-task");
@@ -61,49 +52,47 @@ newProjectButton.addEventListener("click", () => {
   newProjectInput.value = "";
   ProjectView.displayProject(project);
   ProjectController.getAllProjects().forEach((project) => ProjectView.createProjectOption(project));
-
-  // saveProjectsToLocalStorage();
 });
 
 form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData.entries());
-    trimData(data);
-    const allTasks = TaskController.getAllTasks();
-    if (mode === "add") {
-      const task = TaskController.createTask(data);
-      allTasks.push(task);
-      localStorage.setItem("all tasks", JSON.stringify(allTasks));
-      TaskView.displayTasks(allTasks);
-      if (task.project === "all-tasks") return;
-      const projects = ProjectController.getAllProjects();
-      const projectIndex = projects.findIndex(project => project.title === task.project);
-      projects[projectIndex].tasksList.push(task);
-      localStorage.setItem('projects', JSON.stringify(projects));
-    } else if (mode === "update") {
-      const task = TaskController.getTaskById(id, allTasks);
-      // if project changes remove it from previous project into the new one (unless the previous project was 'all-tasks')
-      const projects = ProjectController.getAllProjects();
-      if (task.project !== data["task-project"]) {
-        const newProjectTitle = data["task-project"];
-        const project = ProjectController.getProjectByTitle(task.project, projects);
-        if (project && project.title !== "all-tasks") {
-          TaskController.deleteTask(id, project);
-        }
-        const newProject = ProjectController.getProjectByTitle(newProjectTitle, projects);
-        if (newProject) newProject.tasksList.push(task);
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const data = Object.fromEntries(formData.entries());
+  trimData(data);
+  const allTasks = TaskController.getAllTasks();
+  if (mode === "add") {
+    const task = TaskController.createTask(data);
+    allTasks.push(task);
+    localStorage.setItem("all tasks", JSON.stringify(allTasks));
+    TaskView.displayTasks(allTasks);
+    if (task.project === "all-tasks") return;
+    const projects = ProjectController.getAllProjects();
+    const projectIndex = projects.findIndex(project => project.title === task.project);
+    projects[projectIndex].tasksList.push(task);
+    localStorage.setItem('projects', JSON.stringify(projects));
+  } else if (mode === "update") {
+    const task = TaskController.getTaskById(id, allTasks);
+    // if project changes remove it from previous project into the new one (unless the previous project was 'all-tasks')
+    const projects = ProjectController.getAllProjects();
+    if (task.project !== data["task-project"]) {
+      const newProjectTitle = data["task-project"];
+      const project = ProjectController.getProjectByTitle(task.project, projects);
+      if (project && project.title !== "all-tasks") {
+        TaskController.deleteTask(id, project);
       }
-      TaskController.updateTask(task, data);
-      const projectsConsistent = projects.every(project => ProjectController.tasksBelongToProject(project, project.tasksList));
-      if (!projectsConsistent) throw new Error("Tasks don't belong to certain projects!");
-      localStorage.setItem("projects", JSON.stringify(projects));
-      localStorage.setItem("all tasks", JSON.stringify(allTasks));
+      const newProject = ProjectController.getProjectByTitle(newProjectTitle, projects);
+      if (newProject) newProject.tasksList.push(task);
     }
-    form.reset();
-    modal.close();
-    const tasks = TaskController.getAllTasks();
-    TaskView.displayTasks(tasks);
+    TaskController.updateTask(task, data);
+    const projectsConsistent = projects.every(project => ProjectController.tasksBelongToProject(project, project.tasksList));
+    if (!projectsConsistent) throw new Error("Tasks don't belong to certain projects!");
+    localStorage.setItem("projects", JSON.stringify(projects));
+    localStorage.setItem("all tasks", JSON.stringify(allTasks));
+  }
+  form.reset();
+  modal.close();
+  const tasks = TaskController.getAllTasks();
+  TaskView.displayTasks(tasks);
 });
 
 formCloseButton.addEventListener("click", () => modal.close());
@@ -141,7 +130,7 @@ document.addEventListener("click", (e) => {
     TaskController.deleteTask(e);
   }
   if (button.type === "checkbox") {
-    toggleCheckbox(e);
+    TaskView.toggleCheckbox(e);
   }
 });
 

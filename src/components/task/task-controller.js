@@ -12,11 +12,11 @@ export default class TaskController {
   static getAllTasks() {
     return JSON.parse(localStorage.getItem("all tasks"));
   }
-  static getTaskById(id, array) {
+  static getTaskById(id, tasks) {
     if (typeof id !== "number") throw new Error("Task id must be an integer.");
-    if (!Array.isArray(array)) throw new Error("Iterable is not an array.");
+    if (!Array.isArray(tasks)) throw new Error("Iterable is not an array.");
     // const allTasks = JSON.parse(localStorage.getItem("all tasks"));
-    return array.find((task) => task.id === id);
+    return tasks.find((task) => task.id === id);
   }
   static createTask(taskDetails) {
     if (!isPlainObject(taskDetails))

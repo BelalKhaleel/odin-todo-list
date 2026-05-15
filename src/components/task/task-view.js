@@ -1,4 +1,5 @@
 import { isPlainObject } from "../../middleware";
+import ProjectController from "../project/project-controller";
 import TaskController from "./task-controller";
 import Task from "./task-model";
 
@@ -88,7 +89,6 @@ export default class TaskView {
     document.querySelector(".tasks-container").appendChild(taskCard);
   }
   static displayTasks(tasks) {
-    // const tasks = TaskController.getAllTasks();
     if (!Array.isArray(tasks))
       throw new Error("Argument should be an array of tasks.");
     if (tasks.length === 0) return;
@@ -122,37 +122,36 @@ export default class TaskView {
       .filter(filterCriteria)
       .forEach((task) => this.displayTask(task));
   }
-}
-
-let taskId;
-
-function toggleCheckbox(e) {
-  const taskCard = e.target.closest(".task-card");
-  const projectName = taskCard.querySelector(".project-name").textContent;
-  const id = parseInt(taskCard.dataset.taskId);
-  const isChecked = e.target.checked;
-  let task;
-  if (projectName !== "All Tasks") {
-    const project = projectsList.find((p) => p.title === projectName);
-    task = project.tasksList.find((t) => t.id === id);
-    if (task) {
+  static toggleCheckbox(e) {
+    const taskCard = e.target.closest(".task-card");
+    const projectName = taskCard.querySelector(".project-name").textContent;
+    const id = parseInt(taskCard.dataset.taskId);
+    const isChecked = e.target.checked;
+    if (projectName !== "all-tasks") {
+      const projects = ProjectController.getAllProjects();
+      const project = ProjectController.getProjectByTitle(projectName, projects);
+      if (!project) return;
+      const task = TaskController.getTaskById(id, project.tasksList);
       task.isComplete = isChecked;
+      localStorage.setItem("projects", JSON.stringify(projects));
+    }
+    const allTasks = TaskController.getAllTasks();
+    const task = allTasks.find((task) => task.id === id);
+    if (!task) return;
+    task.isComplete = isChecked;
+    localStorage.setItem("all tasks", JSON.stringify(allTasks));
+    if (task.isComplete) {
+      taskCard.querySelector(".task-title").classList.add("strikethrough");
+      taskCard
+        .querySelector(".task-description")
+        .classList.add("strikethrough");
+      taskCard.querySelector(".due-date").classList.add("strikethrough");
+    } else {
+      taskCard.querySelector(".task-title").classList.remove("strikethrough");
+      taskCard
+        .querySelector(".task-description")
+        .classList.remove("strikethrough");
+      taskCard.querySelector(".due-date").classList.remove("strikethrough");
     }
   }
-  task = TaskController.getAllTasks().find((t) => t.id === id);
-  if (task) {
-    task.isComplete = isChecked;
-  }
-  if (task.isComplete) {
-    taskCard.querySelector('.task-title').classList.add("strikethrough");
-    taskCard.querySelector('.task-description').classList.add("strikethrough");
-    taskCard.querySelector('.due-date').classList.add("strikethrough");
-  } else {
-    taskCard.querySelector('.task-title').classList.remove("strikethrough");
-    taskCard.querySelector('.task-description').classList.remove("strikethrough");
-    taskCard.querySelector('.due-date').classList.remove("strikethrough");
-  }
-  saveProjectsToLocalStorage();
 }
-
-export { toggleCheckbox, taskId };
