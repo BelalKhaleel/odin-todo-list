@@ -2,6 +2,7 @@ import openFolder from "../icons/folder-open-solid.svg";
 import trash from "../icons/trash-solid.svg";
 import ProjectController, { projectsList } from "./project-controller";
 import TaskView from "../task/task-view";
+import TaskController from "../task/task-controller";
 
 export default class ProjectView {
   static projectOptions = document.querySelector("#task-project");
@@ -57,6 +58,20 @@ export default class ProjectView {
     const projects = ProjectController.getAllProjects();
     if (projects.length === 0) return;
     projects.forEach((project) => this.createProjectOption(project));
+  }
+  static removeProject(e) {
+    const item = e.target.closest("li");
+    const projectTitle = item.querySelector(".sidebar-nav-project").textContent;
+    const projects = ProjectController.getAllProjects();
+    ProjectController.deleteProject(projectTitle, projects);
+    localStorage.setItem("projects", JSON.stringify(projects));
+    item.remove();
+    const tasks = TaskController.getAllTasks();
+    const filteredTasks = tasks.filter(
+      (task) => task.project !== projectTitle,
+    );
+    localStorage.setItem("all tasks", JSON.stringify(filteredTasks));
+    TaskView.displayTasks(TaskController.getAllTasks());
   }
 }
 

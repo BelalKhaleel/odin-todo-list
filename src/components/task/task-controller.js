@@ -10,8 +10,7 @@ import { isPlainObject, trimData } from "../../middleware";
 
 export default class TaskController {
   static getAllTasks() {
-    const allTasks = JSON.parse(localStorage.getItem("all tasks"));
-    return allTasks;
+    return JSON.parse(localStorage.getItem("all tasks"));
   }
   static getTaskById(id, array) {
     if (typeof id !== "number") throw new Error("Task id must be an integer.");

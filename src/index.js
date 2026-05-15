@@ -1,14 +1,11 @@
-import {
-  deleteProject,
-  projectsList,
-  // saveProjectsToLocalStorage,
-} from "./components/project/project-controller.js";
+// import {
+//   deleteProject,
+//   projectsList,
+//   // saveProjectsToLocalStorage,
+// } from "./components/project/project-controller.js";
 import ProjectController from "./components/project/project-controller.js";
 import ProjectView from "./components/project/project-view.js";
 import TaskController from "./components/task/task-controller.js";
-import {
-  filterTasks,
-} from "./components/task/task-controller.js";
 import TaskView, {
   // loadTaskValues,
   toggleCheckbox,
@@ -126,10 +123,7 @@ document.addEventListener("click", (e) => {
     ProjectView.displayProjectTasks(projectTitle);
   }
   if (button.closest(".trash-nav-icon")) {
-    deleteProject(e);
-    // saveProjectsToLocalStorage();
-    const tasks = TaskController.getAllTasks();
-    TaskView.displayTasks(tasks);
+    ProjectView.removeProject(e);
   }
   if (button.closest(".edit-btn")) {
     mode = "update";
