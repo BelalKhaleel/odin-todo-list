@@ -9,7 +9,6 @@ export default class TaskController {
   static getTaskById(id, tasks) {
     if (typeof id !== "number") throw new Error("Task id must be an integer.");
     if (!Array.isArray(tasks)) throw new Error("Iterable is not an array.");
-    // const allTasks = JSON.parse(localStorage.getItem("all tasks"));
     return tasks.find((task) => task.id === id);
   }
   static createTask(taskDetails) {
@@ -23,18 +22,6 @@ export default class TaskController {
     const project = taskDetails["task-project"];
     if (!title || !description || !dueDate) return;
     return new Task(title, description, dueDate, priority, project);
-
-    // const allTasks = TaskController.getAllTasks();
-    // const isTaskInAllTasks = allTasks.some(
-    //   (t) =>
-    //     t.title === task.title
-    //   && t.description === task.description
-    //   && t.dueDate === task.dueDate
-    // );
-
-    // if (!isTaskInAllTasks) {
-    //   allTasks.push(task);
-    // }
   }
   static updateTask(task, taskUpdates) {
     if (!isPlainObject(taskUpdates))

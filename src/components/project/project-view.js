@@ -16,9 +16,6 @@ export default class ProjectView {
       "sidebar-nav-project",
     );
     projectBtn.textContent = project.title;
-    // const openFolderIcon = document.createElement("img");
-    // openFolderIcon.classList.add("nav-item-icon");
-    // openFolderIcon.src = openFolder;
     const trashIconContainer = document.createElement("button");
     const trashIcon = document.createElement("img");
     trashIcon.classList.add("trash-nav-icon");

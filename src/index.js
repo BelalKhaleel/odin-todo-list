@@ -33,7 +33,6 @@ sidebarAddTaskButton.addEventListener("click", () => {
   form.reset();
   const options = document.querySelectorAll(".project-option");
   ProjectView.displayProjectOptions(options);
-  console.log(mode);
 });
 
 todayTasks.addEventListener("click", () => TaskView.filterTasks((task) => isEqual(task.dueDate, today)));
@@ -119,7 +118,6 @@ document.addEventListener("click", (e) => {
     id = parseInt(button.closest(".task-card").dataset.taskId);
     formTaskButton.textContent = "Edit Task";
     modal.showModal();
-    console.log(mode);
     const projectOptions = document.querySelectorAll(".project-option");
     ProjectView.displayProjectOptions(projectOptions);
     const allTasks = TaskController.getAllTasks();
