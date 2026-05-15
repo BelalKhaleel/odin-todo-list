@@ -47,10 +47,10 @@ sidebarAddTaskButton.addEventListener("click", () => {
   console.log(mode);
 });
 
-todayTasks.addEventListener("click", () => filterTasks((task) => isEqual(task.dueDate, today)));
-upcomingTasks.addEventListener("click", () => filterTasks((task) => isAfter(task.dueDate, today)));
-importantTasks.addEventListener("click", () => filterTasks((task) => task.priority === "high"));
-completedTasks.addEventListener("click", () => filterTasks((task) => task.isComplete === true));
+todayTasks.addEventListener("click", () => TaskView.filterTasks((task) => isEqual(task.dueDate, today)));
+upcomingTasks.addEventListener("click", () => TaskView.filterTasks((task) => isAfter(task.dueDate, today)));
+importantTasks.addEventListener("click", () => TaskView.filterTasks((task) => task.priority === "high"));
+completedTasks.addEventListener("click", () => TaskView.filterTasks((task) => task.isComplete === true));
 
 newProjectButton.addEventListener("click", () => {
   if (!newProjectInput.value) return;

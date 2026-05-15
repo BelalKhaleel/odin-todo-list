@@ -17,7 +17,7 @@ export default class TaskController {
     if (typeof id !== "number") throw new Error("Task id must be an integer.");
     if (!Array.isArray(array)) throw new Error("Iterable is not an array.");
     // const allTasks = JSON.parse(localStorage.getItem("all tasks"));
-    return array.find(task => task.id === id);
+    return array.find((task) => task.id === id);
   }
   static createTask(taskDetails) {
     if (!isPlainObject(taskDetails))
@@ -44,7 +44,8 @@ export default class TaskController {
     // }
   }
   static updateTask(task, taskUpdates) {
-    if (!isPlainObject(taskUpdates)) throw new Error("Incorrect data type. It should be an object");
+    if (!isPlainObject(taskUpdates))
+      throw new Error("Incorrect data type. It should be an object");
     trimData(taskUpdates);
     task.title = taskUpdates["task-title"];
     task.description = taskUpdates["task-description"];
@@ -81,11 +82,3 @@ export default class TaskController {
   }
 }
 
-function filterTasks(filterCriteria) {
-  TaskView.clearTaskCards();
-  TaskController.getAllTasks()
-    .filter(filterCriteria)
-    .forEach((task) => TaskView.displayTask(task));
-}
-
-export { filterTasks };

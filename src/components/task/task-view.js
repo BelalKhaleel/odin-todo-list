@@ -1,7 +1,6 @@
+import { isPlainObject } from "../../middleware";
 import TaskController from "./task-controller";
 import Task from "./task-model";
-
-const taskCards = document.querySelector(".tasks-container");
 
 export default class TaskView {
   static displayTask(task) {
@@ -86,15 +85,19 @@ export default class TaskView {
     rightSection.append(cardActions, projectName);
     taskCard.dataset.taskId = task.id;
 
-    taskCards.appendChild(taskCard);
+    document.querySelector(".tasks-container").appendChild(taskCard);
   }
-  static displayTasks(allTasks) {
-    // const allTasks = TaskController.getAllTasks();
-    if (allTasks.length === 0) return;
+  static displayTasks(tasks) {
+    // const tasks = TaskController.getAllTasks();
+    if (!Array.isArray(tasks))
+      throw new Error("Argument should be an array of tasks.");
+    if (tasks.length === 0) return;
     this.clearTaskCards();
-    allTasks.forEach((task) => this.displayTask(task));
+    tasks.forEach((task) => this.displayTask(task));
   }
   static displayCurrentTaskDetails(task) {
+    if (!isPlainObject)
+      throw new Error("Task details must be contained in an object.");
     const title = document.getElementById("task-title-input");
     const description = document.getElementById("task-description-input");
     const dueDate = document.getElementById("task-due-date-input");
@@ -107,74 +110,21 @@ export default class TaskView {
     project.value = task.project;
   }
   static removeTaskCard() {
-
+    // document.querySelector(".task-card").remove();
   }
   static clearTaskCards() {
     const taskCards = document.querySelectorAll(".task-card");
     taskCards.forEach((task) => task.remove());
   }
-}
-
-let taskId;
-
-// function loadTaskValues(e) {
-//   const taskCard = e.target.closest(".task-card");
-//   const projectName = taskCard.querySelector(".project-name").textContent;
-//   const id = parseInt(taskCard.dataset.taskId);
-//   let project;
-//   let index;
-//   if (projectName !== "All Tasks") {
-//     project = projectsList.find((p) => p.title === projectName);
-//     index = project.tasksList.findIndex((t) => t.id === id);
-//   } else {
-//     project = projectsList[0];
-//     index = project.tasksList.findIndex((t) => t.id === id);
-//   }
-//   const task = project.tasksList[index];
-//   const title = document.getElementById("task-title-input");
-//   const description = document.getElementById("task-description-input");
-//   const dueDate = document.getElementById("task-due-date-input");
-//   const priority = document.getElementById("task-priority-input");
-//   const taskProject = document.getElementById("task-project");
-//   title.value = task.title;
-//   description.value = task.description;
-//   dueDate.value = task.dueDate;
-//   priority.value = task.priority;
-//   // displayProjectOptions();
-//   taskProject.value = task.project.toLowerCase().replace(/\s+/g, "-");
-//   taskId = task.id;
-// }
-
-function updateTaskCard(task) {
-  const taskCard = document.querySelector(
-    `.task-card[data-task-id="${task.id}"]`
-  );
-
-  if (taskCard) {
-    taskCard.querySelector(".task-title").textContent = task.title;
-    taskCard.querySelector(".task-description").textContent = task.description;
-    taskCard.querySelector(".due-date").value = task.dueDate;
-    taskCard.classList.remove(
-      "high-priority",
-      "medium-priority",
-      "low-priority"
-    );
-
-    if (task.priority === "high") {
-      taskCard.classList.add("high-priority");
-    } else if (task.priority === "low") {
-      taskCard.classList.add("low-priority");
-    } else {
-      taskCard.classList.add("medium-priority");
-    }
-    taskCard.querySelector(".project-name").textContent = task.project;
+  static filterTasks(filterCriteria) {
+    this.clearTaskCards();
+    TaskController.getAllTasks()
+      .filter(filterCriteria)
+      .forEach((task) => this.displayTask(task));
   }
 }
 
-const clearTaskCards = () => {
-  const taskCards = document.querySelectorAll(".task-card");
-  taskCards.forEach((task) => task.remove());
-}
+let taskId;
 
 function toggleCheckbox(e) {
   const taskCard = e.target.closest(".task-card");
@@ -205,4 +155,4 @@ function toggleCheckbox(e) {
   saveProjectsToLocalStorage();
 }
 
-export { updateTaskCard, toggleCheckbox, taskId };
+export { toggleCheckbox, taskId };
