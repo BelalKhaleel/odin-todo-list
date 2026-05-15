@@ -5,6 +5,7 @@ import TaskView from "./components/task/task-view.js";
 import { trimData } from "./middleware.js";
 import { format, isEqual, isAfter } from "date-fns";
 import "./style.css";
+import Task from "./components/task/task-model.js";
 
 const currentProject = document.querySelector(".current-project");
 const sidebarAddTaskButton = document.querySelector(".add-task");
@@ -72,7 +73,6 @@ form.addEventListener("submit", (e) => {
     localStorage.setItem('projects', JSON.stringify(projects));
   } else if (mode === "update") {
     const task = TaskController.getTaskById(id, allTasks);
-    // if project changes remove it from previous project into the new one (unless the previous project was 'all-tasks')
     const projects = ProjectController.getAllProjects();
     if (task.project !== data["task-project"]) {
       const newProjectTitle = data["task-project"];
@@ -127,7 +127,7 @@ document.addEventListener("click", (e) => {
     TaskView.displayCurrentTaskDetails(task);
   }
   if (button.closest(".delete-btn")) {
-    TaskController.deleteTask(e);
+    TaskView.removeTaskCard(e);
   }
   if (button.type === "checkbox") {
     TaskView.toggleCheckbox(e);
@@ -165,9 +165,6 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!projects) {
     localStorage.setItem("projects", JSON.stringify([]));
   }
-  // displayProjects(projects);
-  // const allTasks = TaskController.getAllTasks()
-  // if (!allTasks) return;
   TaskView.displayTasks(allTasks);
   ProjectView.displayProjects(projects);
 });

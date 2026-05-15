@@ -109,8 +109,20 @@ export default class TaskView {
     priority.value = task.priority;
     project.value = task.project;
   }
-  static removeTaskCard() {
-    // document.querySelector(".task-card").remove();
+  static removeTaskCard(e) {
+    const taskCard = e.target.closest(".task-card");
+    const projectTitle = taskCard.querySelector(".project-name").textContent;
+    const id = parseInt(taskCard.dataset.taskId);
+    if (projectTitle !== "all-tasks") {
+      const projects = ProjectController.getAllProjects();
+      const project = ProjectController.getProjectByTitle(projectTitle, projects);
+      TaskController.deleteTask(id, project.tasksList);
+      localStorage.setItem("projects", JSON.stringify(projects));
+    }
+    const allTasks = TaskController.getAllTasks();
+    TaskController.deleteTask(id, allTasks);
+    localStorage.setItem("all tasks", JSON.stringify(allTasks));
+    taskCard.remove();
   }
   static clearTaskCards() {
     const taskCards = document.querySelectorAll(".task-card");

@@ -1,11 +1,5 @@
 import Task from "./task-model";
-import {
-  projectsList,
-  // saveProjectsToLocalStorage,
-} from "../project/project-controller";
-import { taskId, updateTaskCard } from "./task-view";
 import TaskView from "./task-view";
-import { displayProjectTasks } from "../project/project-view";
 import { isPlainObject, trimData } from "../../middleware";
 
 export default class TaskController {
@@ -51,33 +45,12 @@ export default class TaskController {
     task.dueDate = taskUpdates["task-due-date"];
     task.priority = taskUpdates["task-priority"];
     task.project = taskUpdates["task-project"];
-    // projectsList.forEach((p) => {
-    //   if (!p.tasksList) return;
-
-    //   const task = p.tasksList.find((t) => t.id === taskId);
-    //   if (!task) return;
-
-    //   const oldProject = p;
-    //   const newProjectName = project.value;
-    //   if (
-    //     task.project.toLowerCase().replace(/\s+/g, "-") !== newProjectName &&
-    //     oldProject.title !== "All Tasks"
-    //   ) {
-    //     moveTaskToNewProject(oldProject, task, newProjectName);
-    //   }
-    //   task.title = title.value;
-    //   task.description = description.value;
-    //   task.dueDate = dueDate.value;
-    //   task.priority = priority.value;
-    //   task.project = project.value;
-    //   updateTaskCard(task);
-    // });
   }
-  static deleteTask(id, project) {
+  static deleteTask(id, tasks) {
     if (typeof id !== "number") throw new Error("Id must be an integer.");
-    if (!isPlainObject(project)) throw new Error("Project should be an object");
-    const index = project.tasksList.findIndex((task) => task.id === id);
-    project.tasksList.splice(index, 1);
+    if (!Array.isArray(tasks)) throw new Error("Second argument should be an array of tasks.");
+    const index = tasks.findIndex((task) => task.id === id);
+    tasks.splice(index, 1);
   }
 }
 
