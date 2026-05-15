@@ -7,7 +7,6 @@ import ProjectController from "./components/project/project-controller.js";
 import ProjectView from "./components/project/project-view.js";
 import TaskController from "./components/task/task-controller.js";
 import {
-  editTask,
   filterTasks,
 } from "./components/task/task-controller.js";
 import TaskView, {
@@ -34,10 +33,10 @@ const projectOptions = document.querySelector("#task-project");
 const formTaskButton = document.getElementById("form-task-btn");
 const formCloseButton = document.querySelector("#cancel-task-btn");
 const today = format(new Date(), "yyyy-MM-dd");
-const tasksBelongToProject = (project, tasks) => {
-  if (tasks.length === 0) return;
-  return tasks.every(task => task.project === project.title);
-}
+// const tasksBelongToProject = (project, tasks) => {
+//   if (tasks.length === 0) return true;
+//   return tasks.every(task => task.project === project.title);
+// }
 let mode = "add";
 let id = 0;
 document.getElementById("task-due-date-input").setAttribute("min", today);
@@ -97,14 +96,13 @@ form.addEventListener("submit", (e) => {
         const newProjectTitle = data["task-project"];
         const project = ProjectController.getProjectByTitle(task.project, projects);
         if (project && project.title !== "all-tasks") {
-          const taskIndex = project.tasksList.findIndex(task => task.id === id);
-          project.tasksList.splice(taskIndex, 1);
+          TaskController.deleteTask(id, project);
         }
         const newProject = ProjectController.getProjectByTitle(newProjectTitle, projects);
         if (newProject) newProject.tasksList.push(task);
       }
       TaskController.updateTask(task, data);
-      const projectsConsistent = projects.every(project => tasksBelongToProject(project, project.tasksList));
+      const projectsConsistent = projects.every(project => ProjectController.tasksBelongToProject(project, project.tasksList));
       if (!projectsConsistent) throw new Error("Tasks don't belong to certain projects!");
       localStorage.setItem("projects", JSON.stringify(projects));
       localStorage.setItem("all tasks", JSON.stringify(allTasks));

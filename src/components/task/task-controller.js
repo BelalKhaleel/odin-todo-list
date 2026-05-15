@@ -73,74 +73,13 @@ export default class TaskController {
     //   updateTaskCard(task);
     // });
   }
-  static deleteTask(e) {
-    const taskCard = e.target.closest(".task-card");
-    const projectName = taskCard.querySelector(".project-name").textContent;
-    const id = parseInt(taskCard.dataset.taskId);
-    if (projectName !== "All Tasks") {
-      const project = projectsList.find((p) => p.title === projectName);
-      const index = project.tasksList.findIndex((t) => t.id === id);
-      project.tasksList.splice(index, 1);
-    }
-    const allTasks = TaskController.getAllTasks();
-    const index = allTasks.findIndex((t) => t.id === id);
-    if (index > -1) allTasks.splice(index, 1);
-    taskCard.remove();
-    // saveProjectsToLocalStorage();
+  static deleteTask(id, project) {
+    if (typeof id !== "number") throw new Error("Id must be an integer.");
+    if (!isPlainObject(project)) throw new Error("Project should be an object");
+    const index = project.tasksList.findIndex((task) => task.id === id);
+    project.tasksList.splice(index, 1);
   }
 }
-
-function editTask() {
-  projectsList.forEach((p) => {
-    if (!p.tasksList) return;
-
-    const task = p.tasksList.find((t) => t.id === taskId);
-    if (!task) return;
-
-    const oldProject = p;
-    const newProjectName = project.value;
-    if (
-      task.project.toLowerCase().replace(/\s+/g, "-") !== newProjectName &&
-      oldProject.title !== "All Tasks"
-    ) {
-      moveTaskToNewProject(oldProject, task, newProjectName);
-    }
-    task.title = title.value;
-    task.description = description.value;
-    task.dueDate = dueDate.value;
-    task.priority = priority.value;
-    task.project = project.value;
-    updateTaskCard(task);
-  });
-}
-
-function moveTaskToNewProject(oldProject, task, newProjectName) {
-  const taskIndex = oldProject.tasksList.indexOf(task);
-  if (taskIndex > -1) {
-    oldProject.tasksList.splice(taskIndex, 1);
-  }
-
-  const newProject = projectsList.find((p) => p.title === newProjectName);
-  if (newProject && newProject.title !== "All Tasks") {
-    newProject.tasksList.push(task);
-  }
-}
-
-// function deleteTask(e) {
-//   const taskCard = e.target.closest(".task-card");
-//   const projectName = taskCard.querySelector(".project-name").textContent;
-//   const id = parseInt(taskCard.dataset.taskId);
-//   if (projectName !== "All Tasks") {
-//     const project = projectsList.find((p) => p.title === projectName);
-//     const index = project.tasksList.findIndex((t) => t.id === id);
-//     project.tasksList.splice(index, 1);
-//   }
-//   const allTasks = TaskController.getAllTasks();
-//   const index = allTasks.findIndex((t) => t.id === id);
-//   if (index > -1) allTasks.splice(index, 1);
-//   taskCard.remove();
-//   saveProjectsToLocalStorage();
-// }
 
 function filterTasks(filterCriteria) {
   TaskView.clearTaskCards();
@@ -149,4 +88,4 @@ function filterTasks(filterCriteria) {
     .forEach((task) => TaskView.displayTask(task));
 }
 
-export { editTask, filterTasks };
+export { filterTasks };
