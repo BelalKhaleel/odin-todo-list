@@ -75,9 +75,8 @@ newProjectButton.addEventListener("click", () => {
   localStorage.setItem("projects", JSON.stringify(projects));
   newProjectInput.value = "";
   ProjectView.displayProject(project);
-  ProjectController.getAllProjects().forEach((project) =>
-    ProjectView.createProjectOption(project),
-  );
+  const options = document.querySelectorAll(".project-option");
+  ProjectView.displayProjectOptions(options);
 });
 
 form.addEventListener("submit", (e) => {
@@ -109,7 +108,7 @@ form.addEventListener("submit", (e) => {
         projects,
       );
       if (project && project.title !== "all-tasks") {
-        TaskController.deleteTask(id, project);
+        TaskController.deleteTask(id, project.tasksList);
       }
       const newProject = ProjectController.getProjectByTitle(
         newProjectTitle,
