@@ -48,11 +48,10 @@ export default class ProjectView {
     projects.forEach((project) => this.displayProject(project));
   }
   static displayProjectTasks(title) {
-    const projects = ProjectController.getAllProjects();
-    const index = projects.findIndex((project) => project.title === title);
     TaskView.clearTaskCards();
-    const tasks = JSON.parse(localStorage.getItem("projects"))[index].tasksList;
-    tasks.forEach((task) => TaskView.displayTask(task));
+    const projects = ProjectController.getAllProjects();
+    const project = ProjectController.getProjectByTitle(title, projects);
+    project.tasksList.forEach((task) => TaskView.displayTask(task));
   }
   static createProjectOption(project) {
     if (!project) return;
