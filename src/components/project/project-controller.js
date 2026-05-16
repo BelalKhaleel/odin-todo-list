@@ -1,5 +1,4 @@
 import Project from "./project-model";
-import { displayProject } from "./project-view";
 import TaskController from "../task/task-controller";
 
 export default class ProjectController {

@@ -23,13 +23,7 @@ const formCloseButton = document.querySelector("#cancel-task-btn");
 const datetimeInput = document.querySelector("input[type='datetime-local']");
 
 const now = new Date();
-// Adjust for local timezone offset and format to YYYY-MM-DDTHH:MM
-const year = now.getFullYear();
-const month = String(now.getMonth() + 1).padStart(2, "0");
-const day = String(now.getDate()).padStart(2, "0");
-const hours = String(now.getHours()).padStart(2, "0");
-const minutes = String(now.getMinutes()).padStart(2, "0");
-const minDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
+const minDateTime = format(now, "yyyy-MM-dd'T'HH:mm");
 const today = format(now, "yyyy-MM-dd");
 datetimeInput.setAttribute("min", minDateTime);
 let mode = "add";
