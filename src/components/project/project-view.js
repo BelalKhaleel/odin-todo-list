@@ -7,6 +7,22 @@ import TaskController from "../task/task-controller";
 export default class ProjectView {
   static projectOptions = document.querySelector("#task-project");
 
+  static addProject(userInput) {
+    if (!userInput) return;
+    const projectTitle = userInput.trim();
+    const projects = ProjectController.getAllProjects();
+    const projectAlreadyExists = ProjectController.getProjectByTitle(
+      projectTitle,
+      projects,
+    );
+    if (projectAlreadyExists) return;
+    const project = ProjectController.createProject(projectTitle);
+    projects.push(project);
+    localStorage.setItem("projects", JSON.stringify(projects));
+    ProjectView.displayProject(project);
+    const options = document.querySelectorAll(".project-option");
+    ProjectView.displayProjectOptions(options);
+  }
   static displayProject(project) {
     const projectContainer = document.createElement("li");
     const projectBtn = document.createElement("button");

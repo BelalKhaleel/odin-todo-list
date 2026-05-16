@@ -62,21 +62,8 @@ completedTasks.addEventListener("click", () =>
 );
 
 newProjectButton.addEventListener("click", () => {
-  if (!newProjectInput.value) return;
-  const projectTitle = newProjectInput.value.trim();
-  const projects = ProjectController.getAllProjects();
-  const projectAlreadyExists = ProjectController.getProjectByTitle(
-    projectTitle,
-    projects,
-  );
-  if (projectAlreadyExists) return;
-  const project = ProjectController.createProject(projectTitle);
-  projects.push(project);
-  localStorage.setItem("projects", JSON.stringify(projects));
+  ProjectView.addProject(newProjectInput.value);
   newProjectInput.value = "";
-  ProjectView.displayProject(project);
-  const options = document.querySelectorAll(".project-option");
-  ProjectView.displayProjectOptions(options);
 });
 
 form.addEventListener("submit", (e) => {
@@ -171,22 +158,8 @@ document.addEventListener("click", (e) => {
 
 newProjectInput.addEventListener("keydown", (e) => {
   if (e.key !== "Enter") return;
-  if (!newProjectInput.value) return;
-  const projectTitle = newProjectInput.value.trim();
-  const projects = ProjectController.getAllProjects();
-  const projectAlreadyExists = ProjectController.getProjectByTitle(
-    projectTitle,
-    projects,
-  );
-  if (projectAlreadyExists) return;
-  const project = ProjectController.createProject(projectTitle);
-  projects.push(project);
-  localStorage.setItem("projects", JSON.stringify(projects));
+  ProjectView.addProject(newProjectInput.value);
   newProjectInput.value = "";
-  ProjectView.displayProject(project);
-  ProjectController.getAllProjects().forEach((project) =>
-    ProjectView.createProjectOption(project),
-  );
 });
 
 document.addEventListener("DOMContentLoaded", () => {
