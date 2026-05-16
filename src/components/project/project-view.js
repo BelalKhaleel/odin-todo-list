@@ -1,6 +1,6 @@
 import openFolder from "../icons/folder-open-solid.svg";
 import trash from "../icons/trash-solid.svg";
-import ProjectController, { projectsList } from "./project-controller";
+import ProjectController from "./project-controller";
 import TaskView from "../task/task-view";
 import TaskController from "../task/task-controller";
 

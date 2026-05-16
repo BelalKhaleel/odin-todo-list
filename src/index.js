@@ -30,6 +30,7 @@ const day = String(now.getDate()).padStart(2, "0");
 const hours = String(now.getHours()).padStart(2, "0");
 const minutes = String(now.getMinutes()).padStart(2, "0");
 const minDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
+const today = format(now, "yyyy-MM-dd");
 datetimeInput.setAttribute("min", minDateTime);
 let mode = "add";
 let id = 0;
@@ -43,23 +44,40 @@ sidebarAddTaskButton.addEventListener("click", () => {
   ProjectView.displayProjectOptions(options);
 });
 
-todayTasks.addEventListener("click", () => TaskView.filterTasks((task) => isEqual(task.dueDate, today)));
-upcomingTasks.addEventListener("click", () => TaskView.filterTasks((task) => isAfter(task.dueDate, today)));
-importantTasks.addEventListener("click", () => TaskView.filterTasks((task) => task.priority === "high"));
-completedTasks.addEventListener("click", () => TaskView.filterTasks((task) => task.isComplete === true));
+todayTasks.addEventListener("click", () =>
+  TaskView.filterTasks((task) =>
+    isEqual(format(new Date(task.dueDate), "yyyy-MM-dd"), today),
+  ),
+);
+upcomingTasks.addEventListener("click", () =>
+  TaskView.filterTasks((task) =>
+    isAfter(format(new Date(task.dueDate), "yyyy-MM-dd"), today),
+  ),
+);
+importantTasks.addEventListener("click", () =>
+  TaskView.filterTasks((task) => task.priority === "high"),
+);
+completedTasks.addEventListener("click", () =>
+  TaskView.filterTasks((task) => task.isComplete === true),
+);
 
 newProjectButton.addEventListener("click", () => {
   if (!newProjectInput.value) return;
   const projectTitle = newProjectInput.value.trim();
   const projects = ProjectController.getAllProjects();
-  const projectAlreadyExists = ProjectController.getProjectByTitle(projectTitle, projects);
+  const projectAlreadyExists = ProjectController.getProjectByTitle(
+    projectTitle,
+    projects,
+  );
   if (projectAlreadyExists) return;
   const project = ProjectController.createProject(projectTitle);
   projects.push(project);
   localStorage.setItem("projects", JSON.stringify(projects));
   newProjectInput.value = "";
   ProjectView.displayProject(project);
-  ProjectController.getAllProjects().forEach((project) => ProjectView.createProjectOption(project));
+  ProjectController.getAllProjects().forEach((project) =>
+    ProjectView.createProjectOption(project),
+  );
 });
 
 form.addEventListener("submit", (e) => {
@@ -75,25 +93,36 @@ form.addEventListener("submit", (e) => {
     TaskView.displayTasks(allTasks);
     if (task.project !== "all-tasks") {
       const projects = ProjectController.getAllProjects();
-      const projectIndex = projects.findIndex(project => project.title === task.project);
+      const projectIndex = projects.findIndex(
+        (project) => project.title === task.project,
+      );
       projects[projectIndex].tasksList.push(task);
-      localStorage.setItem('projects', JSON.stringify(projects));
+      localStorage.setItem("projects", JSON.stringify(projects));
     }
   } else if (mode === "update") {
     const task = TaskController.getTaskById(id, allTasks);
     const projects = ProjectController.getAllProjects();
     if (task.project !== data["task-project"]) {
       const newProjectTitle = data["task-project"];
-      const project = ProjectController.getProjectByTitle(task.project, projects);
+      const project = ProjectController.getProjectByTitle(
+        task.project,
+        projects,
+      );
       if (project && project.title !== "all-tasks") {
         TaskController.deleteTask(id, project);
       }
-      const newProject = ProjectController.getProjectByTitle(newProjectTitle, projects);
+      const newProject = ProjectController.getProjectByTitle(
+        newProjectTitle,
+        projects,
+      );
       if (newProject) newProject.tasksList.push(task);
     }
     TaskController.updateTask(task, data);
-    const projectsConsistent = projects.every(project => ProjectController.tasksBelongToProject(project, project.tasksList));
-    if (!projectsConsistent) throw new Error("Tasks don't belong to certain projects!");
+    const projectsConsistent = projects.every((project) =>
+      ProjectController.tasksBelongToProject(project, project.tasksList),
+    );
+    if (!projectsConsistent)
+      throw new Error("Tasks don't belong to certain projects!");
     localStorage.setItem("projects", JSON.stringify(projects));
     localStorage.setItem("all tasks", JSON.stringify(allTasks));
   }
@@ -109,7 +138,7 @@ allTasks.addEventListener("click", () => {
   currentProject.textContent = allTasks.textContent;
   const tasks = TaskController.getAllTasks();
   TaskView.displayTasks(tasks);
-})
+});
 
 document.addEventListener("click", (e) => {
   const button = e.target;
