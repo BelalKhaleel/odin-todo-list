@@ -12,7 +12,7 @@ export default class ProjectController {
     if (typeof title !== "string")
       throw new Error("Project title must be a string.");
     if (!Array.isArray(projects))
-      throw new Error("Projects must be an arrary.");
+      throw new Error("Projects must be an array.");
     const project = projects.find((project) => project.title === title);
     if (!project) return;
     return project;

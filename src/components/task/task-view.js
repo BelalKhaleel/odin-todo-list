@@ -44,7 +44,7 @@ export default class TaskView {
     const description = document.createElement("p");
     description.className = "task-description";
     description.textContent = task.description;
-    
+
     const dueDate = document.createElement("span");
     dueDate.className = "due-date";
     const options = {
@@ -106,7 +106,7 @@ export default class TaskView {
     tasks.forEach((task) => this.displayTask(task));
   }
   static displayCurrentTaskDetails(task) {
-    if (!isPlainObject)
+    if (!isPlainObject(task))
       throw new Error("Task details must be contained in an object.");
     const title = document.getElementById("task-title-input");
     const description = document.getElementById("task-description-input");
@@ -125,7 +125,10 @@ export default class TaskView {
     const id = parseInt(taskCard.dataset.taskId);
     if (projectTitle !== "all-tasks") {
       const projects = ProjectController.getAllProjects();
-      const project = ProjectController.getProjectByTitle(projectTitle, projects);
+      const project = ProjectController.getProjectByTitle(
+        projectTitle,
+        projects,
+      );
       TaskController.deleteTask(id, project.tasksList);
       localStorage.setItem("projects", JSON.stringify(projects));
     }
@@ -151,7 +154,10 @@ export default class TaskView {
     const isChecked = e.target.checked;
     if (projectName !== "all-tasks") {
       const projects = ProjectController.getAllProjects();
-      const project = ProjectController.getProjectByTitle(projectName, projects);
+      const project = ProjectController.getProjectByTitle(
+        projectName,
+        projects,
+      );
       if (!project) return;
       const task = TaskController.getTaskById(id, project.tasksList);
       task.isComplete = isChecked;
