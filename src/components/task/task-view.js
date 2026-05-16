@@ -44,10 +44,20 @@ export default class TaskView {
     const description = document.createElement("p");
     description.className = "task-description";
     description.textContent = task.description;
-
+    
     const dueDate = document.createElement("span");
     dueDate.className = "due-date";
-    dueDate.textContent = task.dueDate;
+    const options = {
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    };
+    dueDate.textContent = new Intl.DateTimeFormat("en-US", options).format(
+      new Date(task.dueDate),
+    );
 
     if (task.isComplete) {
       title.classList.add("strikethrough");

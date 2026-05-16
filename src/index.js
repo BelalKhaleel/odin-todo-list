@@ -5,7 +5,6 @@ import TaskView from "./components/task/task-view.js";
 import { trimData } from "./middleware.js";
 import { format, isEqual, isAfter } from "date-fns";
 import "./style.css";
-import Task from "./components/task/task-model.js";
 
 const currentProject = document.querySelector(".current-project");
 const sidebarAddTaskButton = document.querySelector(".add-task");
@@ -21,10 +20,19 @@ const allTasks = document.querySelector(".all-tasks");
 const projectOptions = document.querySelector("#task-project");
 const formTaskButton = document.getElementById("form-task-btn");
 const formCloseButton = document.querySelector("#cancel-task-btn");
-const today = format(new Date(), "yyyy-MM-dd");
+const datetimeInput = document.querySelector("input[type='datetime-local']");
+
+const now = new Date();
+// Adjust for local timezone offset and format to YYYY-MM-DDTHH:MM
+const year = now.getFullYear();
+const month = String(now.getMonth() + 1).padStart(2, "0");
+const day = String(now.getDate()).padStart(2, "0");
+const hours = String(now.getHours()).padStart(2, "0");
+const minutes = String(now.getMinutes()).padStart(2, "0");
+const minDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
+datetimeInput.setAttribute("min", minDateTime);
 let mode = "add";
 let id = 0;
-document.getElementById("task-due-date-input").setAttribute("min", today);
 
 sidebarAddTaskButton.addEventListener("click", () => {
   mode = "add";
@@ -65,11 +73,12 @@ form.addEventListener("submit", (e) => {
     allTasks.push(task);
     localStorage.setItem("all tasks", JSON.stringify(allTasks));
     TaskView.displayTasks(allTasks);
-    if (task.project === "all-tasks") return;
-    const projects = ProjectController.getAllProjects();
-    const projectIndex = projects.findIndex(project => project.title === task.project);
-    projects[projectIndex].tasksList.push(task);
-    localStorage.setItem('projects', JSON.stringify(projects));
+    if (task.project !== "all-tasks") {
+      const projects = ProjectController.getAllProjects();
+      const projectIndex = projects.findIndex(project => project.title === task.project);
+      projects[projectIndex].tasksList.push(task);
+      localStorage.setItem('projects', JSON.stringify(projects));
+    }
   } else if (mode === "update") {
     const task = TaskController.getTaskById(id, allTasks);
     const projects = ProjectController.getAllProjects();
